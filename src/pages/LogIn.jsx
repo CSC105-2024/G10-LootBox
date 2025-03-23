@@ -46,7 +46,7 @@ export default function LogIn() {
           <label className="block font-semibold">Username</label>
           <input
             {...register("username")}
-            className="w-full p-2 border rounded mt-1"
+            className="bg-white w-full p-2 border rounded mt-1"
             placeholder="Enter your Username"
           />
           {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
@@ -56,7 +56,7 @@ export default function LogIn() {
             <input
               {...register("password")}
               type={passwordVisible ? "text" : "password"}
-              className="w-full p-2 border rounded mt-1 pr-10"
+              className="bg-white w-full p-2 border rounded mt-1"
               placeholder="Enter your Password"
             />
             <button
@@ -64,18 +64,13 @@ export default function LogIn() {
               onClick={togglePassword}
               className="absolute right-3 top-4"
             >
-              {passwordVisible ? (
-                <img src="../src/icon/openeye.png" alt="Toggle password visibility" className="w-6" />
-              ) : (
-                <img src="../src/icon/eyeclose.png" alt="Toggle password visibility" className="w-6" />
-              )}
             </button>
           </div>
           {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
           <button
             type="submit"
-            className="w-full bg-amber-800 text-white p-2 mt-4 rounded font-bold border border-black"
+            className="w-full bg-amber-800 hover:bg-amber-900 text-white p-2 mt-4 rounded font-bold border border-black"
           >
             Login
           </button>

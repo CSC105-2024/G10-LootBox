@@ -46,16 +46,7 @@ export default function SignUp() {
     hasNumber: /[0-9]/.test(password),
   };
 
-  const togglePassword = (type) => {
-    if (type === "password") {
-      setPasswordVisible(!passwordVisible);
-    } else {
-      setConfirmPasswordVisible(!confirmPasswordVisible);
-    }
-  };
-
   const onSubmit = (data) => {
-    alert("Sign-up successful!");
     navigate("/login");
   };
 
@@ -77,7 +68,7 @@ export default function SignUp() {
           <label className="block font-semibold">Username</label>
           <input
             {...register("username")}
-            className="w-full p-2 border rounded mt-1"
+            className="bg-white w-full p-2 border rounded mt-1"
             placeholder="Enter your Username"
           />
           {errors.username && (
@@ -92,7 +83,7 @@ export default function SignUp() {
             <input
               {...register("password")}
               type={passwordVisible ? "text" : "password"}
-              className="w-full p-2 border rounded mt-1 pr-10"
+              className="bg-white w-full p-2 border rounded mt-1"
               placeholder="Enter your password"
             />
             <button
@@ -100,11 +91,7 @@ export default function SignUp() {
               onClick={() => togglePassword("password")}
               className="absolute right-3 top-4"
             >
-              {passwordVisible ? (
-                <img src="../src/icon/openeye.png" alt="Hide password" className="w-6" />
-              ) : (
-                <img src="../src/icon/eyeclose.png" alt="Show password" className="w-6" />
-              )}
+              
             </button>
           </div>
 
@@ -142,7 +129,7 @@ export default function SignUp() {
             <input
               {...register("confirmPassword")}
               type={confirmPasswordVisible ? "text" : "password"}
-              className="w-full p-2 border rounded mt-1 pr-10"
+              className="bg-white w-full p-2 border rounded mt-1"
               placeholder="Re-enter your password"
             />
             <button
@@ -150,11 +137,7 @@ export default function SignUp() {
               onClick={() => togglePassword("confirmPassword")}
               className="absolute right-3 top-4"
             >
-              {confirmPasswordVisible ? (
-                <img src="../src/icon/openeye.png" alt="Hide password" className="w-6" />
-              ) : (
-                <img src="../src/icon/eyeclose.png" alt="Show password" className="w-6" />
-              )}
+              
             </button>
           </div>
           {errors.confirmPassword && (
@@ -164,7 +147,7 @@ export default function SignUp() {
             </p>
           )}
 
-          <button type="submit" className="w-full bg-amber-800 text-white p-2 mt-4 rounded font-bold border border-black">
+          <button type="submit" className="w-full bg-amber-800 hover:bg-amber-900 text-white p-2 mt-4 rounded font-bold border border-black">
             Sign Up
           </button>
 
