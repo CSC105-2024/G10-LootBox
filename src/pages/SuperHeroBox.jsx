@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const SuperHeroBox = () => {
-  const [timeRemaining, setTimeRemaining] = useState(180); // 3 minutes in seconds
+  const [timeRemaining, setTimeRemaining] = useState(180);
   const [selectedBox, setSelectedBox] = useState('Superhero Box');
   const [showSettings, setShowSettings] = useState(false);
   const [keys, setKeys] = useState(0);
+  const navigate = useNavigate();
   
-  const RESET_TIME = 180; // 3 minutes
+  const RESET_TIME = 180;
   const FREE_KEYS = 3;
 
   useEffect(() => {
@@ -153,11 +155,14 @@ const SuperHeroBox = () => {
 
       {/* Shop Button */}
       <div className="absolute bottom-4 right-4">
-        <button className="font-pixelify bg-green-500 text-black px-8 py-2 text-2xl rounded font-bold"
+        <button 
+        type ="button"
+        onClick={() => navigate("/shop/buy")}
+        className="font-pixelify bg-green-500 text-black px-8 py-2 text-2xl rounded font-bold"
           style={{
             boxShadow: '0 4px 0 #1b7e1e',
             textShadow: '1px 1px 0 #fff'
-          }}>
+            }}>
           SHOP
         </button>
       </div>

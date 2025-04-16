@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 export default function Buying() {
+    const navigate = useNavigate();
+
   // Set individual prices for each key type
   const pricePerKey = {
     memeBox: 250,
@@ -92,7 +95,7 @@ export default function Buying() {
          style={{ backgroundImage: "url('../src/assets/background/shopbg.png')" }}>
       <div className="relative w-full h-screen">
         <div className="absolute top-4 left-4 z-10">
-          <button>
+          <button type ="button" onClick={() => navigate("/main")}>
             <img src="../src/assets/arrow/arrow_back.png" alt="Back" className="h-6 w-6 md:h-10 md:w-10" />
           </button>
         </div>

@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
+  const navigate = useNavigate();
   return (
     <div className="font-pixelify">
     
@@ -45,7 +47,8 @@ const Main = () => {
         </div>
 
         {/* SHOP Button */}
-        <button className="bg-green-900 text-white px-6 py-2 h-12 self-end rounded-xl shadow-md">
+        <button className="bg-green-900 text-white px-6 py-2 h-12 self-end rounded-xl shadow-md"
+        onClick={() => navigate("/shop/buy")}>
           SHOP
         </button>
       </div>
