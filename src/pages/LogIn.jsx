@@ -82,7 +82,7 @@ export default function LogIn() {
               onClick={() => navigate("/signup")}
               className="text-black font-semibold hover:underline"
             >
-              Sign upz
+              Sign up
             </button>
           </p>
         </form>
