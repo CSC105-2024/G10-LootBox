@@ -1,47 +1,52 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
-export default function Buying() {
+export default function Selling() {
     const navigate = useNavigate();
 
-  // Set individual prices for each key type
-  const pricePerKey = {
-    memeBox: 250,
-    superheroBox: 850
+  // Set individual prices for each item type
+  const pricePerItem = {
+    cryCat: 500,
+    boss: 1275
   };
 
   const [quantity, setQuantity] = useState({
-    memeBox: 0,
-    superheroBox: 0
+    cryCat: 0,
+    boss: 0
   });
 
-  // Add state for user's money and bag
+  // Add state for user's money and inventory
   const [userMoney, setUserMoney] = useState(4999000);
-  const [userBag, setUserBag] = useState(20);
+  const [userInventory, setUserInventory] = useState({
+    cryCat: 12,
+    boss: 8
+  });
   
   // Add state for the animation overlay
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationMessage, setAnimationMessage] = useState("");
 
-  const handleIncrement = (keyType) => {
-    setQuantity(prev => ({
-      ...prev,
-      [keyType]: prev[keyType] + 1
-    }));
-  };
-
-  const handleDecrement = (keyType) => {
-    if (quantity[keyType] > 0) {
+  const handleIncrement = (itemType) => {
+    if (quantity[itemType] < userInventory[itemType]) {
       setQuantity(prev => ({
         ...prev,
-        [keyType]: prev[keyType] - 1
+        [itemType]: prev[itemType] + 1
       }));
     }
   };
 
-  // Calculate total keys and total price
-  const totalKeys = quantity.memeBox + quantity.superheroBox;
-  const totalPrice = (quantity.memeBox * pricePerKey.memeBox) + (quantity.superheroBox * pricePerKey.superheroBox);
+  const handleDecrement = (itemType) => {
+    if (quantity[itemType] > 0) {
+      setQuantity(prev => ({
+        ...prev,
+        [itemType]: prev[itemType] - 1
+      }));
+    }
+  };
+
+  // Calculate total items and total price
+  const totalItems = quantity.cryCat + quantity.boss;
+  const totalPrice = (quantity.cryCat * pricePerItem.cryCat) + (quantity.boss * pricePerItem.boss);
   
   // Effect to hide animation after delay
   useEffect(() => {
@@ -49,39 +54,39 @@ export default function Buying() {
     if (showAnimation) {
       timer = setTimeout(() => {
         setShowAnimation(false);
-      }, 2000); // Animation will show for 2 seconds
+      }, 2000);
     }
     return () => clearTimeout(timer);
   }, [showAnimation]);
   
-  // Handle the buy button click
-  const handleBuy = () => {
-    // Check if user has enough money
-    if (userMoney >= totalPrice && totalKeys > 0) {
-      // Deduct money
-      setUserMoney(prevMoney => prevMoney - totalPrice);
-      // Add keys to bag
-      setUserBag(prevBag => prevBag + totalKeys);
-      // Reset quantities
-      setQuantity({
-        memeBox: 0,
-        superheroBox: 0
-      });
-      // Show success animation
-      setAnimationMessage("Purchase successful!");
-      setShowAnimation(true);
-    } else if (totalKeys <= 0) {
-      setAnimationMessage("Please select at least one key to purchase.");
-      setShowAnimation(true);
-    } else {
-      setAnimationMessage("Not enough coins for this purchase!");
-      setShowAnimation(true);
-    }
-  };
-  
   // Function to close animation when clicked
   const handleCloseAnimation = () => {
     setShowAnimation(false);
+  };
+  
+  // Handle the sell button click
+  const handleSell = () => {
+    // Check if user has selected any items to sell
+    if (totalItems > 0) {
+      // Add money
+      setUserMoney(prevMoney => prevMoney + totalPrice);
+      // Remove items from inventory
+      setUserInventory(prev => ({
+        cryCat: prev.cryCat - quantity.cryCat,
+        boss: prev.boss - quantity.boss
+      }));
+      // Reset quantities
+      setQuantity({
+        cryCat: 0,
+        boss: 0
+      });
+      // Show success animation
+      setAnimationMessage("Sale successful!");
+      setShowAnimation(true);
+    } else {
+      setAnimationMessage("Please select at least one item to sell.");
+      setShowAnimation(true);
+    }
   };
   
   const textStrokeStyle = {
@@ -99,17 +104,16 @@ export default function Buying() {
     textShadow: '2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000'
   };
   
-  const buyingTitleStrokeStyle = {
+  const sellingTitleStrokeStyle = {
     WebkitTextStroke: '2px black',
     textShadow: '2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000'
   };
   
-  const desktopBuyingTitleStrokeStyle = {
+  const desktopSellingTitleStrokeStyle = {
     WebkitTextStroke: '4px black',
     textShadow: '3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000'
   };
-  
-  // Updated animation message style to match Prize and Total text sizes
+
   const mobileMessageStrokeStyle = {
     WebkitTextStroke: '0.5px black',
     textShadow: '1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000'
@@ -135,23 +139,15 @@ export default function Buying() {
             onClick={handleCloseAnimation}
           >
             <div className="px-10 py-6 rounded-xl">
-              {/* Mobile size */}
               <p className="md:hidden text-white font-pixelify text-3xl text-center" style={mobileMessageStrokeStyle}>
                 {animationMessage}
               </p>
-              {/* Desktop size - matches Price and Total text */}
               <p className="hidden md:block text-white font-pixelify text-5xl font-bold text-center" style={desktopMessageStrokeStyle}>
                 {animationMessage}
               </p>
             </div>
           </div>
         )}
-      
-        <div className="absolute top-4 left-4 z-10">
-          <button type ="button" onClick={() => navigate("/main")}>
-            <img src="../src/assets/arrow/arrow_back.png" alt="Back" className="h-6 w-6 md:h-10 md:w-10" />
-          </button>
-        </div>
         
         <div className="absolute top-8 right-16 z-10">
           <div className="flex items-center bg-white px-6 py-1 rounded-full md:px-8 md:py-4">
@@ -168,7 +164,7 @@ export default function Buying() {
               </div>
               <div className="text-black font-pixelify text-lg md:text-2xl flex items-center">
                 <img src="../src/assets/profile/bag.png" alt="Bag" className="w-5 h-5 mr-2 md:w-8 md:h-8" />
-                {userBag}
+                {userInventory.cryCat + userInventory.boss}
               </div>
             </div>
           </div>
@@ -176,30 +172,32 @@ export default function Buying() {
         
         <div className="md:hidden flex flex-col items-center justify-center h-full px-4 pt-24">
           <div className="w-full flex justify-center mb-2 mt-8 z-20 relative">
-            <h1 className="text-yellow-500 font-pixelify text-6xl font-semibold"
-                style={buyingTitleStrokeStyle}>
-              BUYING
+            <h1 className="text-[#00DA62] font-pixelify text-6xl font-semibold"
+                style={sellingTitleStrokeStyle}>
+              SELLING
             </h1>
           </div>
           
           <div className="w-full max-w-xs bg-center bg-no-repeat bg-contain p-6" 
                style={{ backgroundImage: "url('../src/assets/shop/shopitemsbg.png')", backgroundSize: "100% 100%" }}>
             <div className="mb-6">
-              <div className="text-white mb-3 font-pixelify font-semibold text-xl text-left pl-2" style={textStrokeStyle}>MemeBox keys</div>
+              <div className="text-white mb-3 font-pixelify font-semibold text-xl text-left pl-2" style={textStrokeStyle}>
+                CryCat (Owned: {userInventory.cryCat})
+              </div>
               <div className="flex items-center justify-between px-2">
                 <div className="w-16 h-12">
-                  <img src="../src/assets/key/key1.png" alt="MemeBox key" className="w-full h-full object-contain" />
+                  <img src="../src/assets/memeitems/crycat.png" alt="CryCat" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
-                    onClick={() => handleIncrement('memeBox')} 
+                    onClick={() => handleIncrement('cryCat')} 
                     className="w-8 h-8 flex items-center justify-center mx-1"
                   >
                     <img src="../src/assets/shop/+.png" alt="Plus" className="w-full h-full object-contain" />
                   </button>
-                  <div className="text-green-500 text-xl w-8 text-center font-pixelify font-semibold mx-2" style={textStrokeStyle}>{quantity.memeBox}</div>
+                  <div className="text-green-500 text-xl w-8 text-center font-pixelify font-semibold mx-2" style={textStrokeStyle}>{quantity.cryCat}</div>
                   <button 
-                    onClick={() => handleDecrement('memeBox')} 
+                    onClick={() => handleDecrement('cryCat')} 
                     className="w-8 h-8 flex items-center justify-center mx-1"
                   >
                     <img src="../src/assets/shop/-.png" alt="Minus" className="w-full h-full object-contain" />
@@ -209,21 +207,23 @@ export default function Buying() {
             </div>
             
             <div>
-              <div className="text-white mb-3 font-pixelify font-semibold text-xl text-left pl-2" style={textStrokeStyle}>Superhero Box keys</div>
+              <div className="text-white mb-3 font-pixelify font-semibold text-xl text-left pl-2" style={textStrokeStyle}>
+                Boss (Owned: {userInventory.boss})
+              </div>
               <div className="flex items-center justify-between px-2">
                 <div className="w-16 h-12">
-                  <img src="../src/assets/key/key2.png" alt="SuperheroBox key" className="rotate-90 w-full h-full object-contain" />
+                  <img src="../src/assets/memeitems/boss.png" alt="Boss" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
-                    onClick={() => handleIncrement('superheroBox')} 
+                    onClick={() => handleIncrement('boss')} 
                     className="w-8 h-8 flex items-center justify-center mx-1"
                   >
                     <img src="../src/assets/shop/+.png" alt="Plus" className="w-full h-full object-contain" />
                   </button>
-                  <div className="text-green-500 text-xl w-8 text-center font-pixelify font-semibold mx-2" style={textStrokeStyle}>{quantity.superheroBox}</div>
+                  <div className="text-green-500 text-xl w-8 text-center font-pixelify font-semibold mx-2" style={textStrokeStyle}>{quantity.boss}</div>
                   <button 
-                    onClick={() => handleDecrement('superheroBox')} 
+                    onClick={() => handleDecrement('boss')} 
                     className="w-8 h-8 flex items-center justify-center mx-1"
                   >
                     <img src="../src/assets/shop/-.png" alt="Minus" className="w-full h-full object-contain" />
@@ -233,8 +233,8 @@ export default function Buying() {
             </div>
           </div>
           
-          <div className="w-full max-w-xs flex justify-end">
-            <img src="../src/assets/arrow/arrowtopage.png" onClick={() => navigate("/shop/sell")} alt="Next" className="w-8 h-8"/>
+          <div className="w-full max-w-xs flex justify-start">
+            <img src="../src/assets/arrow/arrowtopage.png" onClick={() => navigate("/shop/buy")} alt="Back" className="w-8 h-8 transform rotate-180"/>
           </div>
           
           <div className="w-full max-w-xs flex flex-col items-center mb-4">
@@ -245,22 +245,22 @@ export default function Buying() {
               </span>
             </div>
             <div className="text-white font-pixelify text-3xl mb-1 font-semibold text-center">
-              <span style={headingStrokeStyle}>Totals: <span className="text-green-500">{totalKeys}</span></span>
+              <span style={headingStrokeStyle}>Totals: <span className="text-[#D30404]">{totalItems}</span></span>
             </div>
           </div>  
           
           <div className="w-full max-w-xs flex justify-center">
             <button 
               className="w-full border-0 border-black"
-              onClick={handleBuy}
+              onClick={handleSell}
             >
-              <img src="../src/assets/shop/buybutton.png" alt="Buy" className="w-full object-contain"/>
+              <img src="../src/assets/shop/sellbutton.png" alt="Sell" className="w-full object-contain"/>
             </button>
           </div>
         </div>
         
         <div className="hidden md:block h-full w-full relative">
-          <div className="absolute top-16 left-16
+          <div className="absolute top-16 left-32
                         w-5/12 h-auto flex flex-col justify-start items-start bg-no-repeat bg-contain"
                style={{ 
                  backgroundImage: "url('../src/assets/shop/shopitemsbg.png')",
@@ -270,22 +270,24 @@ export default function Buying() {
                }}>
             <div className="w-full pl-16 pr-16 mb-8">
               <div className="text-white mb-3 font-pixelify font-bold text-4xl" 
-                   style={desktopHeadingStrokeStyle}>MemeBox keys</div>
+                   style={desktopHeadingStrokeStyle}>
+                   CryCat (Owned: {userInventory.cryCat})
+              </div>
               <div className="flex items-center justify-between">
                 <div className="w-32 h-24">
-                  <img src="../src/assets/key/key1.png" alt="MemeBox key" className="w-full h-full object-contain" />
+                  <img src="../src/assets/memeitems/crycat.png" alt="CryCat" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
-                    onClick={() => handleIncrement('memeBox')} 
+                    onClick={() => handleIncrement('cryCat')} 
                     className="w-16 h-16"
                   >
                     <img src="../src/assets/shop/+.png" alt="Plus" className="w-full h-full object-contain" />
                   </button>
                   <div className="text-green-500 text-5xl w-16 text-center font-pixelify font-bold mx-4" 
-                       style={desktopHeadingStrokeStyle}>{quantity.memeBox}</div>
+                       style={desktopHeadingStrokeStyle}>{quantity.cryCat}</div>
                   <button 
-                    onClick={() => handleDecrement('memeBox')} 
+                    onClick={() => handleDecrement('cryCat')} 
                     className="w-16 h-16"
                   >
                     <img src="../src/assets/shop/-.png" alt="Minus" className="w-full h-full object-contain" />
@@ -296,22 +298,24 @@ export default function Buying() {
             
             <div className="w-full pl-16 pr-16">
               <div className="text-white mb-3 font-pixelify font-bold text-4xl" 
-                   style={desktopHeadingStrokeStyle}>Superhero Box keys</div>
+                   style={desktopHeadingStrokeStyle}>
+                   Boss (Owned: {userInventory.boss})
+              </div>
               <div className="flex items-center justify-between">
                 <div className="w-32 h-24 flex items-center">
-                  <img src="../src/assets/key/key2.png" alt="SuperheroBox key" className="rotate-90 w-full h-full object-contain" />
+                  <img src="../src/assets/memeitems/boss.png" alt="Boss" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
-                    onClick={() => handleIncrement('superheroBox')} 
+                    onClick={() => handleIncrement('boss')} 
                     className="w-16 h-16"
                   >
                     <img src="../src/assets/shop/+.png" alt="Plus" className="w-full h-full object-contain" />
                   </button>
                   <div className="text-green-500 text-5xl w-16 text-center font-pixelify font-bold mx-4" 
-                       style={desktopHeadingStrokeStyle}>{quantity.superheroBox}</div>
+                       style={desktopHeadingStrokeStyle}>{quantity.boss}</div>
                   <button 
-                    onClick={() => handleDecrement('superheroBox')} 
+                    onClick={() => handleDecrement('boss')} 
                     className="w-16 h-16"
                   >
                     <img src="../src/assets/shop/-.png" alt="Minus" className="w-full h-full object-contain" />
@@ -321,10 +325,10 @@ export default function Buying() {
             </div>
           </div>
           
-          <div className="absolute bottom-32 left-16 w-5/12 flex justify-center">
-            <h1 className="text-yellow-500 font-pixelify text-8xl font-bold"
-                style={desktopBuyingTitleStrokeStyle}>
-              BUYING
+          <div className="absolute bottom-32 left-32 w-5/12 flex justify-center">
+            <h1 className="text-[#00DA62] font-pixelify text-8xl font-bold"
+                style={desktopSellingTitleStrokeStyle}>
+              SELLING
             </h1>
           </div>
           
@@ -338,22 +342,22 @@ export default function Buying() {
             </div>
             <div className="flex justify-end">
               <div className="text-white text-5xl font-pixelify font-bold mb-8" style={desktopHeadingStrokeStyle}>
-                Totals: <span className="text-green-500">{totalKeys}</span>
+                Totals: <span className="text-[#D30404]">{totalItems}</span>
               </div>
             </div>
             
             <div className="flex justify-end mt-2">
               <button 
                 className="border-0"
-                onClick={handleBuy}
+                onClick={handleSell}
               >
-                <img src="../src/assets/shop/buybutton.png" alt="Buy" className="w-64 object-contain"/>
+                <img src="../src/assets/shop/sellbutton.png" alt="Sell" className="w-64 object-contain"/>
               </button>
             </div>
           </div>
         
-          <div className="absolute right-8 top-1/2 transform -translate-y-1/2">
-            <img src="../src/assets/arrow/arrowtopage.png" onClick={() => navigate("/shop/sell")} alt="Next" className="w-16 h-16"/>
+          <div className="absolute left-8 top-1/2 transform -translate-y-1/2">
+            <img src="../src/assets/arrow/arrowtopage.png" onClick={() => navigate("/shop/buy")} alt="Back" className="w-16 h-16 transform rotate-180"/>
           </div>
         </div>
       </div>
