@@ -1,68 +1,198 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 const Main = () => {
+  const [timeRemaining, setTimeRemaining] = useState(180);
+  const [selectedBox, setSelectedBox] = useState('Main');
+  const [showSettings, setShowSettings] = useState(false);
+  const [keys, setKeys] = useState(0);
+  const [isPlayButtonHovered, setIsPlayButtonHovered] = useState(false);
   const navigate = useNavigate();
-  return (
-    <div className="font-pixelify">
     
-      <div className="relative bg-[url('..\src\assets\background\memebg.png')] bg-cover w-[900px] h-[500px] border-4 border-blue-300 rounded-xl overflow-hidden">
-      {/* Top Left Player Info */}
-      <div className="absolute top-4 left-4 bg-white rounded-full p-3 flex items-center gap-3 shadow-lg">
-        <img src="..\src\assets\profile\avatar.png"  className="w-16 h-16 rounded-full" />
-        <div>
-          <h2 className="font-bold text-lg">Michael Kaiser</h2>
-          <p className="text-yellow-500 font-bold">💰 5,000,000</p>
-          <p>🎒 20</p>
+  const RESET_TIME = 180;
+  const FREE_KEYS = 3;
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeRemaining((prevTime) => {
+        if (prevTime <= 1) {
+          setKeys(prevKeys => prevKeys + FREE_KEYS);
+          return RESET_TIME;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+  
+    return () => clearInterval(timer);
+  }, []);
+  
+  // Handle box selection change
+  const handleBoxChange = (e) => {
+    const selectedValue = e.target.value;
+    setSelectedBox(selectedValue);
+    
+    // Navigate to superhero page when Superhero Box is selected
+    if (selectedValue === "Superhero Box") {
+      navigate("/superhero");
+    }
+  };
+  
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+  
+  // Default text stroke style (black)
+  const textStrokeStyle = {
+    textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
+  };
+  
+  // White text stroke style for drop rates
+  const whiteStrokeStyle = {
+    textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff',
+  };
+  
+  return (
+    <div 
+      className="font-pixelify min-h-screen relative bg-[url('..\src\assets\background\memebg.png')] bg-cover bg-center"
+    >
+      {/* Top section with profile, logo, and settings in the same row */}
+      <div className="flex justify-between items-center p-6">
+        {/* Profile - Left */}
+        <div className="bg-white rounded-full p-3 flex items-center">
+          <div className="mr-3">
+            <img src="..\src\assets\profile\avatar.png" alt="Profile" className="w-16 h-16 rounded-full" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold">Michael Kaiser</h2>
+            <div className="flex items-center">
+              <img src="..\src\assets\profile\coin.png" alt="Coin" className="w-6 h-6 mr-2" />
+              <span className="text-yellow-500 text-lg">5,000,000</span>
+            </div>
+            <div className="flex items-center">
+              <img src="..\src\assets\profile\bag.png" alt="Bag" className="w-6 h-6 mr-2" />
+              <span className="text-lg">20</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Logo - Center, same y-level as profile */}
+        <div className="flex justify-center items-center">
+          <img src="..\src\icon\logo.png" alt="LootBox" className="h-24" />
+        </div>
+
+        {/* Settings - Right */}
+        <div className="relative">
+          <button 
+            className="text-3xl p-3"
+            onClick={() => setShowSettings(!showSettings)}
+          >
+            ⚙️
+          </button>
+            
+          {showSettings && (
+            <div className="absolute right-0 top-12 bg-white rounded-md shadow-lg p-3 w-40 z-10">
+              <ul className="text-base">
+                <li onClick={() => navigate("/main")} className="py-2 hover:bg-gray-100 cursor-pointer">Home</li>
+                <li className="py-2 hover:bg-gray-100 cursor-pointer">Account</li>
+                <li onClick={() => navigate("/login")} className="py-2 hover:bg-gray-100 cursor-pointer border-t border-gray-200 mt-1 pt-1">Sign out</li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Title */}
-      <h1 className="text-center text-5xl font-bold mt-4">Loot<span className="text-yellow-400">B</span>ox</h1>
-
-      {/* Dropdown */}
-      <div className="text-center mt-2">
-        <select className="bg-white px-4 py-2 rounded shadow">
-          <option>Meme Box</option>
+      
+      {/* Box Selection - Center */}
+      <div className="flex justify-center mb-8 mt-6">
+        <select 
+          value={selectedBox}
+          onChange={handleBoxChange}
+          className="font-pixelify bg-white px-4 py-2 rounded-md border border-gray-300 w-48"
+        >
+          <option>Meme Box </option>
+          <option value="Superhero Box">Superhero Box </option>
         </select>
       </div>
-
-      {/* Chest and Drop Rates */}
-      <div className="flex justify-between px-10 mt-4">
-        {/* Drop Rates */}
-        <div className="text-left font-pixel text-xl">
-          <p className="text-green-500">common 40%</p>
-          <p className="text-blue-600">uncommon 30%</p>
-          <p className="text-purple-600">epic 20%</p>
-          <p className="text-yellow-600">legendary 10%</p>
+  
+      {/* Main Content */}
+      <div className="flex">
+        {/* Drop Rates - Left side */}
+        <div className="w-1/3 text-left px-4">
+          <h3 className="font-pixelify text-5xl mb-4 font-bold" style={whiteStrokeStyle}>Drop rates</h3>
+          <p className="font-pixelify text-[#00DA62] text-4xl mb-2" style={textStrokeStyle}>common 40%</p>
+          <p className="font-pixelify text-[#0CC2FF] text-4xl mb-2" style={textStrokeStyle}>uncommon 39.9%</p>
+          <p className="font-pixelify text-[#9C4BFF] text-4xl mb-2" style={textStrokeStyle}>epic 10%</p>
+          <p className="font-pixelify text-[#EAB70F] text-4xl mb-2" style={textStrokeStyle}>legendary 5%</p>
+        </div>
+  
+        {/* Loot Box Display - Center */}
+        <div className="w-1/3 flex flex-col items-center justify-center">
+          {/* Loot Box Image */}
+          <div className="mb-4 flex justify-center">
+            <img src="..\src\assets\chest\Chest1.png" alt="Loot Box" className="w-64" />
+          </div>
+            
+          {/* Key Status - Now with dynamic color based on keys count */}
+          <div className="flex items-center justify-center mb-4">
+            <img src="..\src\assets\key\key1.png" alt="Key" className="w-6 h-6 mr-2" />
+            <span 
+              className={`font-pixelify text-lg ${keys > 0 ? 'text-[#00DA62]' : 'text-red-600'}`} 
+              style={textStrokeStyle}
+            >
+              Key remaining {keys}
+            </span>
+          </div>
+  
+          {/* Play Button - Using image with hover effect */}
+          <div className="flex justify-center mb-6 w-full">
+            <button 
+              onClick={() => {
+                if (keys > 0) {
+                  setKeys(keys - 1);
+                  // Logic to open the loot box
+                }
+              }}
+              onMouseEnter={() => setIsPlayButtonHovered(true)}
+              onMouseLeave={() => setIsPlayButtonHovered(false)}
+              className="focus:outline-none"
+            >
+              <img 
+                src={isPlayButtonHovered ? '../src/assets/main/playbuttonCapicity35.png' : '../src/assets/main/playbutton.png'} 
+                alt="Play Button" 
+                className="w-48"
+              />
+            </button>
+          </div>
+            
+          {/* Timer */}
+          <div className="font-pixelify text-center mb-4">
+            <span className="text-[#00DA62]" style={textStrokeStyle}>3 </span>
+            <span className="text-white" style={textStrokeStyle}>Free keys in </span>
+            <span className="text-red-600" style={textStrokeStyle}>{formatTime(timeRemaining)}</span>
+            <span className="text-white" style={textStrokeStyle}> minutes</span>
+          </div>
         </div>
         
-        {/* Chest */}
-        <div className="flex flex-col items-center">
-          <img src="..\src\assets\chest\Chest1.png" alt="chest" className="w-40" />
-          <p className="text-green-500 font-bold mt-2">Key remaining: 8</p>
-          <button className="bg-green-500 text-white px-6 py-2 mt-2 rounded-xl font-bold shadow-md">
-            PLAY
-          </button>
-        </div>
-
-        {/* SHOP Button */}
-        <button className="bg-green-900 text-white px-6 py-2 h-12 self-end rounded-xl shadow-md"
-        onClick={() => navigate("/shop/buy")}>
+        {/* Right section for spacing */}
+        <div className="w-1/3"></div>
+      </div>
+  
+      {/* Shop Button - Right */} 
+      <div className="absolute bottom-4 right-4">
+        <button 
+          type="button"
+          onClick={() => navigate("/shop/buy")}
+          className="font-pixelify bg-green-500 text-black px-8 py-2 text-2xl rounded font-bold"
+          style={{
+            boxShadow: '0 4px 0 #1b7e1e',
+            textShadow: '1px 1px 0 #fff'
+          }}>
           SHOP
         </button>
       </div>
-
-      {/* Bottom Free Keys Info */}
-      <div className="absolute bottom-4 w-full text-center font-pixel text-sm">
-        <p className="text-green-500">3 Free keys in <span className="text-red-500">5:00</span> minutes</p>
-      </div>
     </div>
+  );
+};
   
-      
-      
-    </div>
-  )
-}
-
-export default Main
+export default Main;

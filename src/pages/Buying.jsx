@@ -22,6 +22,9 @@ export default function Buying() {
   // Add state for the animation overlay
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationMessage, setAnimationMessage] = useState("");
+  
+  // Add state for button hover
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
 
   const handleIncrement = (keyType) => {
     setQuantity(prev => ({
@@ -68,13 +71,13 @@ export default function Buying() {
         superheroBox: 0
       });
       // Show success animation
-      setAnimationMessage("Purchase successful!");
+      setAnimationMessage("Purchase successful! ✅✅✅ ");
       setShowAnimation(true);
     } else if (totalKeys <= 0) {
       setAnimationMessage("Please select at least one key to purchase.");
       setShowAnimation(true);
     } else {
-      setAnimationMessage("Not enough coins for this purchase!");
+      setAnimationMessage("Not enough coins for this purchase! ❌❌❌");
       setShowAnimation(true);
     }
   };
@@ -253,8 +256,14 @@ export default function Buying() {
             <button 
               className="w-full border-0 border-black"
               onClick={handleBuy}
+              onMouseEnter={() => setIsButtonHovered(true)}
+              onMouseLeave={() => setIsButtonHovered(false)}
             >
-              <img src="../src/assets/shop/buybutton.png" alt="Buy" className="w-full object-contain"/>
+              <img 
+                src={isButtonHovered ? "../src/assets/shop/buybuttonOpacity30.png" : "../src/assets/shop/buybutton.png"} 
+                alt="Buy" 
+                className="w-full object-contain"
+              />
             </button>
           </div>
         </div>
@@ -346,8 +355,14 @@ export default function Buying() {
               <button 
                 className="border-0"
                 onClick={handleBuy}
+                onMouseEnter={() => setIsButtonHovered(true)}
+                onMouseLeave={() => setIsButtonHovered(false)}
               >
-                <img src="../src/assets/shop/buybutton.png" alt="Buy" className="w-64 object-contain"/>
+                <img 
+                  src={isButtonHovered ? "../src/assets/shop/buybuttonOpacity30.png" : "../src/assets/shop/buybutton.png"} 
+                  alt="Buy" 
+                  className="w-64 object-contain"
+                />
               </button>
             </div>
           </div>
