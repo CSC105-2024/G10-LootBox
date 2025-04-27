@@ -22,9 +22,6 @@ export default function Buying() {
   // Add state for the animation overlay
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationMessage, setAnimationMessage] = useState("");
-  
-  // Add state for button hover
-  const [isButtonHovered, setIsButtonHovered] = useState(false);
 
   const handleIncrement = (keyType) => {
     setQuantity(prev => ({
@@ -64,20 +61,20 @@ export default function Buying() {
       // Deduct money
       setUserMoney(prevMoney => prevMoney - totalPrice);
       // Add keys to bag
-      setUserBag(prevBag => prevBag + totalKeys);
+     
       // Reset quantities
       setQuantity({
         memeBox: 0,
         superheroBox: 0
       });
       // Show success animation
-      setAnimationMessage("Purchase successful! ✅✅✅ ");
+      setAnimationMessage("Purchase successful!");
       setShowAnimation(true);
     } else if (totalKeys <= 0) {
       setAnimationMessage("Please select at least one key to purchase.");
       setShowAnimation(true);
     } else {
-      setAnimationMessage("Not enough coins for this purchase! ❌❌❌");
+      setAnimationMessage("Not enough coins for this purchase!");
       setShowAnimation(true);
     }
   };
@@ -160,7 +157,7 @@ export default function Buying() {
           <div className="flex items-center bg-white px-6 py-1 rounded-full md:px-8 md:py-4">
             <div className="relative">
               <div className="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden md:w-20 md:h-20">
-                <img src="../src/assets/profile/avatar.png" alt="Profile" className="w-full h-full object-cover" />
+                <img src="../src/assets/profile/avatar.png" alt="Profile" onClick={() => navigate("/profile")} className="w-full h-full object-cover" />
               </div>
             </div>
             <div className="ml-3 md:ml-5">
@@ -215,7 +212,7 @@ export default function Buying() {
               <div className="text-white mb-3 font-pixelify font-semibold text-xl text-left pl-2" style={textStrokeStyle}>Superhero Box keys</div>
               <div className="flex items-center justify-between px-2">
                 <div className="w-16 h-12">
-                  <img src="../src/assets/key/key2.png" alt="SuperheroBox key" className="rotate-90 w-full h-full object-contain" />
+                  <img src="../src/assets/key/key2.png" alt="SuperheroBox key" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
@@ -256,14 +253,8 @@ export default function Buying() {
             <button 
               className="w-full border-0 border-black"
               onClick={handleBuy}
-              onMouseEnter={() => setIsButtonHovered(true)}
-              onMouseLeave={() => setIsButtonHovered(false)}
             >
-              <img 
-                src={isButtonHovered ? "../src/assets/shop/buybuttonOpacity30.png" : "../src/assets/shop/buybutton.png"} 
-                alt="Buy" 
-                className="w-full object-contain"
-              />
+              <img src="../src/assets/shop/buybutton.png" alt="Buy" className="w-full object-contain"/>
             </button>
           </div>
         </div>
@@ -308,7 +299,7 @@ export default function Buying() {
                    style={desktopHeadingStrokeStyle}>Superhero Box keys</div>
               <div className="flex items-center justify-between">
                 <div className="w-32 h-24 flex items-center">
-                  <img src="../src/assets/key/key2.png" alt="SuperheroBox key" className="rotate-90 w-full h-full object-contain" />
+                  <img src="../src/assets/key/key2.png" alt="SuperheroBox key" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
@@ -355,14 +346,8 @@ export default function Buying() {
               <button 
                 className="border-0"
                 onClick={handleBuy}
-                onMouseEnter={() => setIsButtonHovered(true)}
-                onMouseLeave={() => setIsButtonHovered(false)}
               >
-                <img 
-                  src={isButtonHovered ? "../src/assets/shop/buybuttonOpacity30.png" : "../src/assets/shop/buybutton.png"} 
-                  alt="Buy" 
-                  className="w-64 object-contain"
-                />
+                <img src="../src/assets/shop/buybutton.png" alt="Buy" className="w-64 object-contain"/>
               </button>
             </div>
           </div>

@@ -25,9 +25,6 @@ export default function Selling() {
   // Add state for the animation overlay
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationMessage, setAnimationMessage] = useState("");
-  
-  // Add state for button hover
-  const [isButtonHovered, setIsButtonHovered] = useState(false);
 
   const handleIncrement = (itemType) => {
     if (quantity[itemType] < userInventory[itemType]) {
@@ -84,7 +81,7 @@ export default function Selling() {
         boss: 0
       });
       // Show success animation
-      setAnimationMessage("Sale successful! ✅✅✅ ");
+      setAnimationMessage("Sell successful!");
       setShowAnimation(true);
     } else {
       setAnimationMessage("Please select at least one item to sell.");
@@ -156,7 +153,7 @@ export default function Selling() {
           <div className="flex items-center bg-white px-6 py-1 rounded-full md:px-8 md:py-4">
             <div className="relative">
               <div className="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden md:w-20 md:h-20">
-                <img src="../src/assets/profile/avatar.png" alt="Profile" className="w-full h-full object-cover" />
+                <img src="../src/assets/profile/avatar.png" onClick={() => navigate("/profile")} alt="Profile" className="w-full h-full object-cover" />
               </div>
             </div>
             <div className="ml-3 md:ml-5">
@@ -189,7 +186,7 @@ export default function Selling() {
               </div>
               <div className="flex items-center justify-between px-2">
                 <div className="w-16 h-12">
-                  <img src="../src/assets/memeitems/raw/crycat.png" alt="CryCat" className="w-full h-full object-contain" />
+                  <img src="../src/assets/memeitems/CryCatpng.png" alt="CryCat" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
@@ -215,7 +212,7 @@ export default function Selling() {
               </div>
               <div className="flex items-center justify-between px-2">
                 <div className="w-16 h-12">
-                  <img src="../src/assets/memeitems/raw/boss.png" alt="Boss" className="w-full h-full object-contain" />
+                  <img src="../src/assets/memeitems/boss.png" alt="Boss" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
@@ -256,14 +253,8 @@ export default function Selling() {
             <button 
               className="w-full border-0 border-black"
               onClick={handleSell}
-              onMouseEnter={() => setIsButtonHovered(true)}
-              onMouseLeave={() => setIsButtonHovered(false)}
             >
-              <img 
-                src={isButtonHovered ? "../src/assets/shop/sellbuttonOpacity30.png" : "../src/assets/shop/sellbutton.png"} 
-                alt="Sell" 
-                className="w-full object-contain"
-              />
+              <img src="../src/assets/shop/sellbutton.png" alt="Sell" className="w-full object-contain"/>
             </button>
           </div>
         </div>
@@ -284,7 +275,7 @@ export default function Selling() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="w-32 h-24">
-                  <img src="../src/assets/memeitems/raw/crycat.png" alt="CryCat" className="w-full h-full object-contain" />
+                  <img src="../src/assets/memeitems/CryCatpng.png" alt="CryCat" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
@@ -312,7 +303,7 @@ export default function Selling() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="w-32 h-24 flex items-center">
-                  <img src="../src/assets/memeitems/raw/boss.png" alt="Boss" className="w-full h-full object-contain" />
+                  <img src="../src/assets/memeitems/BossDogpng.png" alt="Boss" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center">
                   <button 
@@ -359,14 +350,8 @@ export default function Selling() {
               <button 
                 className="border-0"
                 onClick={handleSell}
-                onMouseEnter={() => setIsButtonHovered(true)}
-                onMouseLeave={() => setIsButtonHovered(false)}
               >
-                <img 
-                  src={isButtonHovered ? "../src/assets/shop/sellbuttonOpacity30.png" : "../src/assets/shop/sellbutton.png"} 
-                  alt="Sell" 
-                  className="w-64 object-contain"
-                />
+                <img src="../src/assets/shop/sellbutton.png" alt="Sell" className="w-64 object-contain"/>
               </button>
             </div>
           </div>
