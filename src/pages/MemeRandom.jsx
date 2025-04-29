@@ -10,7 +10,7 @@ export default function MemeRandom() {
   const [animation, setAnimation] = useState('animate-shake');
   const boxRef = useRef(null);
   
-  // Get the previous page from location state or default to main
+
   const previousPage = location.state?.from || "/main";
 
   // Memes array with rarity data
@@ -55,44 +55,45 @@ export default function MemeRandom() {
     return memes[0];
   };
 
+  // Start animation sequence
+  const startOpeningAnimation = () => {
+    // Reset states
+    setShowResult(false);
+    setIsOpening(true);
+    setResultMeme(null);
+    
+    // Start with shake animation
+    setAnimation('animate-shake');
+    
+    // After shake, change to glow
+    setTimeout(() => {
+      setAnimation('animate-glow');
+      
+      // After glowing, show result
+      setTimeout(() => {
+        const randomMeme = getRandomMeme();
+        setResultMeme(randomMeme);
+        setShowResult(true);
+        setIsOpening(false);
+        
+        // Reset animation classes
+        setAnimation('');
+      }, 2000);
+    }, 1500);
+  };
+
   // Auto-start animation sequence when component mounts
   useEffect(() => {
-    const autoPlaySequence = () => {
-      // Start with shake animation
-      setAnimation('animate-shake');
-      
-      // After shake, change to glow
-      setTimeout(() => {
-        setAnimation('animate-glow');
-        
-        // After glowing, show result
-        setTimeout(() => {
-          const randomMeme = getRandomMeme();
-          setResultMeme(randomMeme);
-          setShowResult(true);
-          setIsOpening(false);
-          
-          // Reset animation classes
-          setAnimation('');
-        }, 2000);
-      }, 1500);
-    };
-    
-    // Start the sequence immediately
-    autoPlaySequence();
+    startOpeningAnimation();
   }, []);
 
   const handleBackToPrevious = () => {
     navigate(previousPage);
   };
 
-  const handleAddToCollection = () => {
-    // Here you would add the meme to the user's collection
-    // This is where you'd implement your collection logic
-    
-    // For now, just show a quick message and navigate back
-    alert(`${resultMeme.name} has been added to your collection!`);
-    navigate(previousPage);
+  const handlePlayAgain = () => {
+    // Restart the opening animation
+    startOpeningAnimation();
   };
 
   // Define animation keyframes
@@ -205,10 +206,10 @@ export default function MemeRandom() {
                 
                 <div className="flex flex-col sm:flex-row gap-4 w-full">
                   <button 
-                    onClick={handleAddToCollection}
+                    onClick={handlePlayAgain}
                     className="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg text-sm sm:text-base transition-colors w-full"
                   >
-                    Add to Collection
+                    Play Again
                   </button>
                   
                   <button 

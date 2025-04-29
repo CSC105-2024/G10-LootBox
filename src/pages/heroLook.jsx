@@ -35,7 +35,7 @@ export default function HeroLook() {
   };
 
   const handleClose = () => {
-    navigate("/main");
+    navigate("/superhero");
   };
 
   const handleNextPage = () => {

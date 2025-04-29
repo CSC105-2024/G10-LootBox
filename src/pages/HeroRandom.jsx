@@ -54,44 +54,41 @@ export default function HeroRandom() {
     return heroes[0];
   };
 
-  // Auto-start animation sequence when component mounts
-  useEffect(() => {
-    const autoPlaySequence = () => {
-      // Start with shake animation
-      setAnimation('animate-shake');
-      
-      // After shake, change to glow
-      setTimeout(() => {
-        setAnimation('animate-glow');
-        
-        // After glowing, show result
-        setTimeout(() => {
-          const randomHero = getRandomHero();
-          setResultHero(randomHero);
-          setShowResult(true);
-          setIsOpening(false);
-          
-          // Reset animation classes
-          setAnimation('');
-        }, 2000);
-      }, 1500);
-    };
+  // Start animation sequence
+  const startOpeningAnimation = () => {
+    // Reset states
+    setShowResult(false);
+    setIsOpening(true);
+    setResultHero(null);
     
-    // Start the sequence immediately
-    autoPlaySequence();
-  }, []);
-
-  const handleBackToPrevious = () => {
-    navigate(previousPage);
+    // Start with shake animation
+    setAnimation('animate-shake');
+    
+    // After shake, change to glow
+    setTimeout(() => {
+      setAnimation('animate-glow');
+      
+      // After glowing, show result
+      setTimeout(() => {
+        const randomHero = getRandomHero();
+        setResultHero(randomHero);
+        setShowResult(true);
+        setIsOpening(false);
+        
+        // Reset animation classes
+        setAnimation('');
+      }, 2000);
+    }, 1500);
   };
 
-  const handleAddToTeam = () => {
-    // Here you would add the hero to the user's team
-    // This is where you'd implement your team/collection logic
-    
-    // For now, just show a quick message and navigate back
-    alert(`${resultHero.name} has been added to your team!`);
-    navigate(previousPage);
+  // Auto-start animation sequence when component mounts
+  useEffect(() => {
+    startOpeningAnimation();
+  }, []);
+
+  const handlePlayAgain = () => {
+    // Restart the opening animation
+    startOpeningAnimation();
   };
 
   // Define animation keyframes
@@ -229,10 +226,10 @@ export default function HeroRandom() {
                 
                 <div className="flex flex-col sm:flex-row gap-4 w-full">
                   <button 
-                    onClick={handleAddToTeam}
+                    onClick={handlePlayAgain}
                     className="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg text-sm sm:text-base transition-colors w-full"
                   >
-                    Add to Collection
+                    Play Again
                   </button>
                   
                   <button 
