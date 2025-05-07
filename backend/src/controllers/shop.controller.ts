@@ -1,4 +1,4 @@
-import { Context } from 'hono';
+import type { Context } from 'hono';
 import * as userModel from '../models/user.model.js';
 import * as keyModel from '../models/key.model.js';
 import * as itemModel from '../models/item.model.js';

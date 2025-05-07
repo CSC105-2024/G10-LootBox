@@ -9,4 +9,4 @@ userRoutes.delete('/delete/:username', userController.handleDeleteAccount);
 userRoutes.get('/username/:username', userController.getUsername);
 userRoutes.get('/inventory/:username', userController.getUserInventory);
 
-export { userRoutes };
+export default userRoutes ;

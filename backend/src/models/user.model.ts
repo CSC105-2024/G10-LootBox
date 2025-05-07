@@ -1,4 +1,4 @@
-import { prisma as db } from '../generated/prisma';
+import { db } from '../index.js';
 
 export const createUser = async (username: string, password: string) => {
   return db.user.create({

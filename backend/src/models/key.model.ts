@@ -1,4 +1,4 @@
-import { prisma as db } from '../generated/prisma';
+import { db } from '../index.js';
 
 export const KEY_TYPES = {
   MEME: 'Meme',

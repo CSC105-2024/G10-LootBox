@@ -6,4 +6,4 @@ const shopRouter = new Hono();
 shopRouter.post('/buy', shopController.buyKey);
 shopRouter.post('/sell', shopController.sellItem);
 
-export { shopRouter };
+export default shopRouter;
