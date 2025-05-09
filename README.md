@@ -1,7 +1,7 @@
 Rest API
 For user
 
-Post 1. http://localhost:3000/user/signup => to Sign up (Require 1.username 2.password )  /n
+Post 1. http://localhost:3000/user/signup => to Sign up (Require 1.username 2.password )  
      2. http://localhost:3000/user/login => to Log in website
 
 Get  1. http://localhost:3000/user/name/:username => get show username
