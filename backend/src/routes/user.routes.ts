@@ -5,8 +5,7 @@ const userRoutes = new Hono();
 
 userRoutes.post('/signup', userController.handleSignup);
 userRoutes.post('/login', userController.handleLogin);
-userRoutes.delete('/delete/:username', userController.handleDeleteAccount);
-userRoutes.get('/username/:username', userController.getUsername);
-userRoutes.get('/inventory/:username', userController.getUserInventory);
+userRoutes.delete('/account/:username', userController.handleDeleteAccount);
+userRoutes.get('/name/:username', userController.getUsername);
 
 export default userRoutes ;

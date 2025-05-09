@@ -24,3 +24,21 @@ export const loginUser = async (username: string, password: string) => {
     return { success: false, data: null, msg: `${e}` };
   }
 };
+
+export const getUsername = async (username: string) => {
+  try {
+    const res = await Axios.get<ApiResponse<User>>(`/user/name/${username}`);
+    return res.data;
+  } catch (e) {
+    return { success: false, data: null, msg: `${e}` };
+  }
+};
+
+export const deleteAccount = async (username: string) => {
+  try {
+    const res = await Axios.delete<ApiResponse<null>>(`/user/delete/${username}`);
+    return res.data;
+  } catch (e) {
+    return { success: false, data: null, msg: `${e}` };
+  }
+};
