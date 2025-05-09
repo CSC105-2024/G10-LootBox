@@ -3,11 +3,12 @@ import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signupUser } from "../api/user";
 
 export default function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
 
   const schema = z
@@ -46,24 +47,28 @@ export default function SignUp() {
     hasNumber: /[0-9]/.test(password),
   };
 
-  const onSubmit = (data) => {
-    navigate("/login");
-  };
-
-  const handleFormSubmit = (data) => {
-    setIsSubmitted(true);
-    return handleSubmit(onSubmit)(data);
+  const onSubmit = async (data) => {
+    const res = await signupUser(data.username, data.password);
+    if (res.success) {
+      navigate("/login");
+    } else {
+      setServerError(res.msg || "Signup failed");
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-orange-100 px-4">
       <div className="w-full max-w-md">
         <div className="fixed top-12 left-0 right-0 flex justify-center z-50">
-          <img src="..\src\icon\logo.png" alt="LootBox Logo" className="w-52" />
+          <img src="../src/icon/logo.png" alt="LootBox Logo" className="w-52" />
         </div>
 
-        <form onSubmit={handleFormSubmit} className="bg-orange-200 p-6 rounded-lg shadow-md w-full">
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-orange-200 p-6 rounded-lg shadow-md w-full">
           <img src="../src/icon/signupLogo.png" alt="Sign Up Logo" className="w-24 mx-auto mb-4" />
+
+          {serverError && (
+            <p className="text-red-600 text-center font-semibold mb-2">{serverError}</p>
+          )}
 
           <label className="block font-semibold">Username</label>
           <input
@@ -74,28 +79,18 @@ export default function SignUp() {
           {errors.username && (
             <p className="text-red-600 text-sm flex items-center mt-1">
               <span className="mr-1">✗</span>
-              Username must be at least 3 characters
+              {errors.username.message}
             </p>
           )}
 
           <label className="block font-semibold mt-4">Password</label>
-          <div className="relative">
-            <input
-              {...register("password")}
-              type={passwordVisible ? "text" : "password"}
-              className="bg-white w-full p-2 border rounded mt-1"
-              placeholder="Enter your password"
-            />
-            <button
-              type="button"
-              onClick={() => togglePassword("password")}
-              className="absolute right-3 top-4"
-            >
-              
-            </button>
-          </div>
-
-          {isSubmitted && errors.password && (
+          <input
+            {...register("password")}
+            type={passwordVisible ? "text" : "password"}
+            className="bg-white w-full p-2 border rounded mt-1"
+            placeholder="Enter your password"
+          />
+          {errors.password && (
             <div className="mt-2">
               <div className="flex items-center">
                 <span className={`${passwordRequirements.minLength ? "text-green-600" : "text-red-600"} mr-1`}>
@@ -125,25 +120,16 @@ export default function SignUp() {
           )}
 
           <label className="block font-semibold mt-4">Confirm Password</label>
-          <div className="relative">
-            <input
-              {...register("confirmPassword")}
-              type={confirmPasswordVisible ? "text" : "password"}
-              className="bg-white w-full p-2 border rounded mt-1"
-              placeholder="Re-enter your password"
-            />
-            <button
-              type="button"
-              onClick={() => togglePassword("confirmPassword")}
-              className="absolute right-3 top-4"
-            >
-              
-            </button>
-          </div>
+          <input
+            {...register("confirmPassword")}
+            type={confirmPasswordVisible ? "text" : "password"}
+            className="bg-white w-full p-2 border rounded mt-1"
+            placeholder="Re-enter your password"
+          />
           {errors.confirmPassword && (
             <p className="text-red-600 text-sm flex items-center mt-1">
               <span className="mr-1">✗</span>
-              Passwords must match
+              {errors.confirmPassword.message}
             </p>
           )}
 

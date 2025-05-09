@@ -1,5 +1,6 @@
 import type { Context } from 'hono';
 import * as userModel from '../models/user.model.js';
+import { getKeysById } from '../models/key.model.js';
 
 interface SignupRequestBody {
   username: string;
@@ -41,12 +42,12 @@ const handleLogin = async (c: Context) => {
 
     const user = await userModel.findUserByUsername(body.username);
     if (!user) {
-      return c.json({ success: false, msg: 'User not found' }, 404);
+      return c.json({ success: false, msg: '🚫 User not found' }, 404);
     }
 
     const isPasswordValid = await userModel.comparePassword(body.password, user.password);
     if (!isPasswordValid) {
-      return c.json({ success: false, msg: 'Invalid credentials' }, 401);
+      return c.json({ success: false, msg: '❌ Invalid password' }, 401);
     }
 
     const totalQuantity = await userModel.getTotalItemQuantity(body.username);
@@ -120,10 +121,18 @@ const getUsername = async (c: Context) => {
   }
 };
 
+const getUserKeys = async (c:Context) => {
+  const userId = 1;
+  const keys = await getKeysById(userId);
+  return c.json(keys);
+};
+
+
 export {
   handleSignup,
   handleLogin,
   handleDeleteAccount,
   getUserInventory,
   getUsername,
+  getUserKeys,
 };

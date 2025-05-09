@@ -121,8 +121,7 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   username: 'username',
   password: 'password',
-  coin: 'coin',
-  remainItems: 'remainItems'
+  coin: 'coin'
 };
 
 exports.Prisma.KeyScalarFieldEnum = {

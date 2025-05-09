@@ -1349,13 +1349,11 @@ export namespace Prisma {
   export type UserAvgAggregateOutputType = {
     id: number | null
     coin: number | null
-    remainItems: number | null
   }
 
   export type UserSumAggregateOutputType = {
     id: number | null
     coin: number | null
-    remainItems: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1363,7 +1361,6 @@ export namespace Prisma {
     username: string | null
     password: string | null
     coin: number | null
-    remainItems: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1371,7 +1368,6 @@ export namespace Prisma {
     username: string | null
     password: string | null
     coin: number | null
-    remainItems: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1379,7 +1375,6 @@ export namespace Prisma {
     username: number
     password: number
     coin: number
-    remainItems: number
     _all: number
   }
 
@@ -1387,13 +1382,11 @@ export namespace Prisma {
   export type UserAvgAggregateInputType = {
     id?: true
     coin?: true
-    remainItems?: true
   }
 
   export type UserSumAggregateInputType = {
     id?: true
     coin?: true
-    remainItems?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1401,7 +1394,6 @@ export namespace Prisma {
     username?: true
     password?: true
     coin?: true
-    remainItems?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1409,7 +1401,6 @@ export namespace Prisma {
     username?: true
     password?: true
     coin?: true
-    remainItems?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1417,7 +1408,6 @@ export namespace Prisma {
     username?: true
     password?: true
     coin?: true
-    remainItems?: true
     _all?: true
   }
 
@@ -1512,7 +1502,6 @@ export namespace Prisma {
     username: string
     password: string
     coin: number
-    remainItems: number
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1539,7 +1528,6 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     coin?: boolean
-    remainItems?: boolean
     keys?: boolean | User$keysArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1550,7 +1538,6 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     coin?: boolean
-    remainItems?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1558,7 +1545,6 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     coin?: boolean
-    remainItems?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1566,10 +1552,9 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     coin?: boolean
-    remainItems?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "coin" | "remainItems", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "coin", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     keys?: boolean | User$keysArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
@@ -1589,7 +1574,6 @@ export namespace Prisma {
       username: string
       password: string
       coin: number
-      remainItems: number
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2019,7 +2003,6 @@ export namespace Prisma {
     readonly username: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly coin: FieldRef<"User", 'Int'>
-    readonly remainItems: FieldRef<"User", 'Int'>
   }
     
 
@@ -6837,8 +6820,7 @@ export namespace Prisma {
     id: 'id',
     username: 'username',
     password: 'password',
-    coin: 'coin',
-    remainItems: 'remainItems'
+    coin: 'coin'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -6927,7 +6909,6 @@ export namespace Prisma {
     username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     coin?: IntFilter<"User"> | number
-    remainItems?: IntFilter<"User"> | number
     keys?: UserKeyListRelationFilter
     items?: UserItemListRelationFilter
   }
@@ -6937,7 +6918,6 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     coin?: SortOrder
-    remainItems?: SortOrder
     keys?: UserKeyOrderByRelationAggregateInput
     items?: UserItemOrderByRelationAggregateInput
   }
@@ -6950,7 +6930,6 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
     coin?: IntFilter<"User"> | number
-    remainItems?: IntFilter<"User"> | number
     keys?: UserKeyListRelationFilter
     items?: UserItemListRelationFilter
   }, "id" | "username">
@@ -6960,7 +6939,6 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     coin?: SortOrder
-    remainItems?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -6976,7 +6954,6 @@ export namespace Prisma {
     username?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     coin?: IntWithAggregatesFilter<"User"> | number
-    remainItems?: IntWithAggregatesFilter<"User"> | number
   }
 
   export type KeyWhereInput = {
@@ -7096,6 +7073,7 @@ export namespace Prisma {
 
   export type UserKeyWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    userId_keyId?: UserKeyUserIdKeyIdCompoundUniqueInput
     AND?: UserKeyWhereInput | UserKeyWhereInput[]
     OR?: UserKeyWhereInput[]
     NOT?: UserKeyWhereInput | UserKeyWhereInput[]
@@ -7104,7 +7082,7 @@ export namespace Prisma {
     quantity?: IntFilter<"UserKey"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     key?: XOR<KeyScalarRelationFilter, KeyWhereInput>
-  }, "id">
+  }, "id" | "userId_keyId">
 
   export type UserKeyOrderByWithAggregationInput = {
     id?: SortOrder
@@ -7151,6 +7129,7 @@ export namespace Prisma {
 
   export type UserItemWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    userId_itemId?: UserItemUserIdItemIdCompoundUniqueInput
     AND?: UserItemWhereInput | UserItemWhereInput[]
     OR?: UserItemWhereInput[]
     NOT?: UserItemWhereInput | UserItemWhereInput[]
@@ -7159,7 +7138,7 @@ export namespace Prisma {
     quantity?: IntFilter<"UserItem"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     item?: XOR<ItemScalarRelationFilter, ItemWhereInput>
-  }, "id">
+  }, "id" | "userId_itemId">
 
   export type UserItemOrderByWithAggregationInput = {
     id?: SortOrder
@@ -7187,7 +7166,6 @@ export namespace Prisma {
     username: string
     password: string
     coin?: number
-    remainItems?: number
     keys?: UserKeyCreateNestedManyWithoutUserInput
     items?: UserItemCreateNestedManyWithoutUserInput
   }
@@ -7197,7 +7175,6 @@ export namespace Prisma {
     username: string
     password: string
     coin?: number
-    remainItems?: number
     keys?: UserKeyUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemUncheckedCreateNestedManyWithoutUserInput
   }
@@ -7206,7 +7183,6 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     coin?: IntFieldUpdateOperationsInput | number
-    remainItems?: IntFieldUpdateOperationsInput | number
     keys?: UserKeyUpdateManyWithoutUserNestedInput
     items?: UserItemUpdateManyWithoutUserNestedInput
   }
@@ -7216,7 +7192,6 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     coin?: IntFieldUpdateOperationsInput | number
-    remainItems?: IntFieldUpdateOperationsInput | number
     keys?: UserKeyUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -7226,14 +7201,12 @@ export namespace Prisma {
     username: string
     password: string
     coin?: number
-    remainItems?: number
   }
 
   export type UserUpdateManyMutationInput = {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     coin?: IntFieldUpdateOperationsInput | number
-    remainItems?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -7241,7 +7214,6 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     coin?: IntFieldUpdateOperationsInput | number
-    remainItems?: IntFieldUpdateOperationsInput | number
   }
 
   export type KeyCreateInput = {
@@ -7283,7 +7255,7 @@ export namespace Prisma {
   export type ItemCreateInput = {
     name: string
     type: string
-    sellPrice?: number
+    sellPrice: number
     userItems?: UserItemCreateNestedManyWithoutItemInput
   }
 
@@ -7291,7 +7263,7 @@ export namespace Prisma {
     id?: number
     name: string
     type: string
-    sellPrice?: number
+    sellPrice: number
     userItems?: UserItemUncheckedCreateNestedManyWithoutItemInput
   }
 
@@ -7314,7 +7286,7 @@ export namespace Prisma {
     id?: number
     name: string
     type: string
-    sellPrice?: number
+    sellPrice: number
   }
 
   export type ItemUpdateManyMutationInput = {
@@ -7331,7 +7303,7 @@ export namespace Prisma {
   }
 
   export type UserKeyCreateInput = {
-    quantity: number
+    quantity?: number
     user: UserCreateNestedOneWithoutKeysInput
     key: KeyCreateNestedOneWithoutUserKeysInput
   }
@@ -7340,7 +7312,7 @@ export namespace Prisma {
     id?: number
     userId: number
     keyId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserKeyUpdateInput = {
@@ -7360,7 +7332,7 @@ export namespace Prisma {
     id?: number
     userId: number
     keyId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserKeyUpdateManyMutationInput = {
@@ -7375,7 +7347,7 @@ export namespace Prisma {
   }
 
   export type UserItemCreateInput = {
-    quantity: number
+    quantity?: number
     user: UserCreateNestedOneWithoutItemsInput
     item: ItemCreateNestedOneWithoutUserItemsInput
   }
@@ -7384,7 +7356,7 @@ export namespace Prisma {
     id?: number
     userId: number
     itemId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserItemUpdateInput = {
@@ -7404,7 +7376,7 @@ export namespace Prisma {
     id?: number
     userId: number
     itemId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserItemUpdateManyMutationInput = {
@@ -7468,13 +7440,11 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     coin?: SortOrder
-    remainItems?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
     coin?: SortOrder
-    remainItems?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -7482,7 +7452,6 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     coin?: SortOrder
-    remainItems?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -7490,13 +7459,11 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     coin?: SortOrder
-    remainItems?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
     coin?: SortOrder
-    remainItems?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -7596,6 +7563,11 @@ export namespace Prisma {
     isNot?: KeyWhereInput
   }
 
+  export type UserKeyUserIdKeyIdCompoundUniqueInput = {
+    userId: number
+    keyId: number
+  }
+
   export type UserKeyCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -7634,6 +7606,11 @@ export namespace Prisma {
   export type ItemScalarRelationFilter = {
     is?: ItemWhereInput
     isNot?: ItemWhereInput
+  }
+
+  export type UserItemUserIdItemIdCompoundUniqueInput = {
+    userId: number
+    itemId: number
   }
 
   export type UserItemCountOrderByAggregateInput = {
@@ -7977,14 +7954,14 @@ export namespace Prisma {
   }
 
   export type UserKeyCreateWithoutUserInput = {
-    quantity: number
+    quantity?: number
     key: KeyCreateNestedOneWithoutUserKeysInput
   }
 
   export type UserKeyUncheckedCreateWithoutUserInput = {
     id?: number
     keyId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserKeyCreateOrConnectWithoutUserInput = {
@@ -7997,14 +7974,14 @@ export namespace Prisma {
   }
 
   export type UserItemCreateWithoutUserInput = {
-    quantity: number
+    quantity?: number
     item: ItemCreateNestedOneWithoutUserItemsInput
   }
 
   export type UserItemUncheckedCreateWithoutUserInput = {
     id?: number
     itemId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserItemCreateOrConnectWithoutUserInput = {
@@ -8069,14 +8046,14 @@ export namespace Prisma {
   }
 
   export type UserKeyCreateWithoutKeyInput = {
-    quantity: number
+    quantity?: number
     user: UserCreateNestedOneWithoutKeysInput
   }
 
   export type UserKeyUncheckedCreateWithoutKeyInput = {
     id?: number
     userId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserKeyCreateOrConnectWithoutKeyInput = {
@@ -8105,14 +8082,14 @@ export namespace Prisma {
   }
 
   export type UserItemCreateWithoutItemInput = {
-    quantity: number
+    quantity?: number
     user: UserCreateNestedOneWithoutItemsInput
   }
 
   export type UserItemUncheckedCreateWithoutItemInput = {
     id?: number
     userId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserItemCreateOrConnectWithoutItemInput = {
@@ -8144,7 +8121,6 @@ export namespace Prisma {
     username: string
     password: string
     coin?: number
-    remainItems?: number
     items?: UserItemCreateNestedManyWithoutUserInput
   }
 
@@ -8153,7 +8129,6 @@ export namespace Prisma {
     username: string
     password: string
     coin?: number
-    remainItems?: number
     items?: UserItemUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -8191,7 +8166,6 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     coin?: IntFieldUpdateOperationsInput | number
-    remainItems?: IntFieldUpdateOperationsInput | number
     items?: UserItemUpdateManyWithoutUserNestedInput
   }
 
@@ -8200,7 +8174,6 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     coin?: IntFieldUpdateOperationsInput | number
-    remainItems?: IntFieldUpdateOperationsInput | number
     items?: UserItemUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -8228,7 +8201,6 @@ export namespace Prisma {
     username: string
     password: string
     coin?: number
-    remainItems?: number
     keys?: UserKeyCreateNestedManyWithoutUserInput
   }
 
@@ -8237,7 +8209,6 @@ export namespace Prisma {
     username: string
     password: string
     coin?: number
-    remainItems?: number
     keys?: UserKeyUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -8249,14 +8220,14 @@ export namespace Prisma {
   export type ItemCreateWithoutUserItemsInput = {
     name: string
     type: string
-    sellPrice?: number
+    sellPrice: number
   }
 
   export type ItemUncheckedCreateWithoutUserItemsInput = {
     id?: number
     name: string
     type: string
-    sellPrice?: number
+    sellPrice: number
   }
 
   export type ItemCreateOrConnectWithoutUserItemsInput = {
@@ -8279,7 +8250,6 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     coin?: IntFieldUpdateOperationsInput | number
-    remainItems?: IntFieldUpdateOperationsInput | number
     keys?: UserKeyUpdateManyWithoutUserNestedInput
   }
 
@@ -8288,7 +8258,6 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     coin?: IntFieldUpdateOperationsInput | number
-    remainItems?: IntFieldUpdateOperationsInput | number
     keys?: UserKeyUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -8319,13 +8288,13 @@ export namespace Prisma {
   export type UserKeyCreateManyUserInput = {
     id?: number
     keyId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserItemCreateManyUserInput = {
     id?: number
     itemId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserKeyUpdateWithoutUserInput = {
@@ -8365,7 +8334,7 @@ export namespace Prisma {
   export type UserKeyCreateManyKeyInput = {
     id?: number
     userId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserKeyUpdateWithoutKeyInput = {
@@ -8388,7 +8357,7 @@ export namespace Prisma {
   export type UserItemCreateManyItemInput = {
     id?: number
     userId: number
-    quantity: number
+    quantity?: number
   }
 
   export type UserItemUpdateWithoutItemInput = {

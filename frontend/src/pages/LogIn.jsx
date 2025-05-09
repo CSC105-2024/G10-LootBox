@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { loginUser } from "../api/user";
 
 export default function LogIn() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState("");
 
   const schema = z.object({
     username: z.string().min(1, "Username is required"),
@@ -25,12 +26,14 @@ export default function LogIn() {
     },
   });
 
-  const togglePassword = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
-  const onSubmit = (data) => {
-    navigate("/main");
+  const onSubmit = async (data) => {
+    const res = await loginUser(data.username, data.password);
+    if (res.success) {
+      setLoginError("");
+      navigate("/main");
+    } else {
+      setLoginError(res.msg || "Login failed");
+    }
   };
 
   return (
@@ -52,20 +55,12 @@ export default function LogIn() {
           {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
 
           <label className="block font-semibold mt-4">Password</label>
-          <div className="relative">
-            <input
-              {...register("password")}
-              type={passwordVisible ? "text" : "password"}
-              className="bg-white w-full p-2 border rounded mt-1"
-              placeholder="Enter your Password"
-            />
-            <button
-              type="button"
-              onClick={togglePassword}
-              className="absolute right-3 top-4"
-            >
-            </button>
-          </div>
+          <input
+            {...register("password")}
+            type="password"
+            className="bg-white w-full p-2 border rounded mt-1"
+            placeholder="Enter your Password"
+          />
           {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
           <button
@@ -74,6 +69,8 @@ export default function LogIn() {
           >
             Login
           </button>
+
+          {loginError && <p className="text-red-500 text-sm mt-2 text-center">{loginError}</p>}
 
           <p className="mt-4 text-center">
             Don't have an account?{" "}
