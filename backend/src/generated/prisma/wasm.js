@@ -144,14 +144,17 @@ exports.Prisma.UserKeyScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   keyId: 'keyId',
-  quantity: 'quantity'
+  quantity: 'quantity',
+  updatedAt: 'updatedAt',
+  lastClaimedAt: 'lastClaimedAt'
 };
 
 exports.Prisma.UserItemScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   itemId: 'itemId',
-  quantity: 'quantity'
+  quantity: 'quantity',
+  owned: 'owned'
 };
 
 exports.Prisma.SortOrder = {

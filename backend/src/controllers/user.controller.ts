@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 import * as userModel from '../models/user.model.js';
 import { getKeysById } from '../models/key.model.js';
+import * as keyModel from '../models/key.model.js';
 
 interface SignupRequestBody {
   username: string;
@@ -113,6 +114,7 @@ const uploadUserImages = async (c: Context) => {
     return c.json({ success: false, data: null, msg: 'Upload failed' }, 500);
   }
 };
+
 const getUserProfile = async (c: Context) => {
   try {
     const username = c.req.param('username');
@@ -121,9 +123,10 @@ const getUserProfile = async (c: Context) => {
     if (!user) {
       return c.json({ success: false, msg: 'User not found' }, 404);
     }
-
+    await keyModel.regenerateKeysIfReady(user.id);
     const inventory = await userModel.getUserInventory(username);
     const profile = await userModel.getUserPicByUsername(username);
+    const userKeys = await keyModel.getUserKeysDetailed(username); 
 
     return c.json({
       success: true,
@@ -133,12 +136,14 @@ const getUserProfile = async (c: Context) => {
         profilePic: profile?.profilePic || '',
         backgroundImage: profile?.backgroundImage || '',
         inventory,
+        keys: userKeys,
       },
     });
   } catch (e) {
     return c.json({ success: false, msg: `Internal Server Error: ${e}` }, 500);
   }
 };
+
 
 export {
   handleSignup,

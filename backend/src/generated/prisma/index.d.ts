@@ -4694,6 +4694,8 @@ export namespace Prisma {
     userId: number | null
     keyId: number | null
     quantity: number | null
+    updatedAt: Date | null
+    lastClaimedAt: Date | null
   }
 
   export type UserKeyMaxAggregateOutputType = {
@@ -4701,6 +4703,8 @@ export namespace Prisma {
     userId: number | null
     keyId: number | null
     quantity: number | null
+    updatedAt: Date | null
+    lastClaimedAt: Date | null
   }
 
   export type UserKeyCountAggregateOutputType = {
@@ -4708,6 +4712,8 @@ export namespace Prisma {
     userId: number
     keyId: number
     quantity: number
+    updatedAt: number
+    lastClaimedAt: number
     _all: number
   }
 
@@ -4731,6 +4737,8 @@ export namespace Prisma {
     userId?: true
     keyId?: true
     quantity?: true
+    updatedAt?: true
+    lastClaimedAt?: true
   }
 
   export type UserKeyMaxAggregateInputType = {
@@ -4738,6 +4746,8 @@ export namespace Prisma {
     userId?: true
     keyId?: true
     quantity?: true
+    updatedAt?: true
+    lastClaimedAt?: true
   }
 
   export type UserKeyCountAggregateInputType = {
@@ -4745,6 +4755,8 @@ export namespace Prisma {
     userId?: true
     keyId?: true
     quantity?: true
+    updatedAt?: true
+    lastClaimedAt?: true
     _all?: true
   }
 
@@ -4839,6 +4851,8 @@ export namespace Prisma {
     userId: number
     keyId: number
     quantity: number
+    updatedAt: Date
+    lastClaimedAt: Date | null
     _count: UserKeyCountAggregateOutputType | null
     _avg: UserKeyAvgAggregateOutputType | null
     _sum: UserKeySumAggregateOutputType | null
@@ -4865,6 +4879,8 @@ export namespace Prisma {
     userId?: boolean
     keyId?: boolean
     quantity?: boolean
+    updatedAt?: boolean
+    lastClaimedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     key?: boolean | KeyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userKey"]>
@@ -4874,6 +4890,8 @@ export namespace Prisma {
     userId?: boolean
     keyId?: boolean
     quantity?: boolean
+    updatedAt?: boolean
+    lastClaimedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     key?: boolean | KeyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userKey"]>
@@ -4883,6 +4901,8 @@ export namespace Prisma {
     userId?: boolean
     keyId?: boolean
     quantity?: boolean
+    updatedAt?: boolean
+    lastClaimedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     key?: boolean | KeyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userKey"]>
@@ -4892,9 +4912,11 @@ export namespace Prisma {
     userId?: boolean
     keyId?: boolean
     quantity?: boolean
+    updatedAt?: boolean
+    lastClaimedAt?: boolean
   }
 
-  export type UserKeyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "keyId" | "quantity", ExtArgs["result"]["userKey"]>
+  export type UserKeyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "keyId" | "quantity" | "updatedAt" | "lastClaimedAt", ExtArgs["result"]["userKey"]>
   export type UserKeyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     key?: boolean | KeyDefaultArgs<ExtArgs>
@@ -4919,6 +4941,8 @@ export namespace Prisma {
       userId: number
       keyId: number
       quantity: number
+      updatedAt: Date
+      lastClaimedAt: Date | null
     }, ExtArgs["result"]["userKey"]>
     composites: {}
   }
@@ -5348,6 +5372,8 @@ export namespace Prisma {
     readonly userId: FieldRef<"UserKey", 'Int'>
     readonly keyId: FieldRef<"UserKey", 'Int'>
     readonly quantity: FieldRef<"UserKey", 'Int'>
+    readonly updatedAt: FieldRef<"UserKey", 'DateTime'>
+    readonly lastClaimedAt: FieldRef<"UserKey", 'DateTime'>
   }
     
 
@@ -5791,6 +5817,7 @@ export namespace Prisma {
     userId: number | null
     itemId: number | null
     quantity: number | null
+    owned: boolean | null
   }
 
   export type UserItemMaxAggregateOutputType = {
@@ -5798,6 +5825,7 @@ export namespace Prisma {
     userId: number | null
     itemId: number | null
     quantity: number | null
+    owned: boolean | null
   }
 
   export type UserItemCountAggregateOutputType = {
@@ -5805,6 +5833,7 @@ export namespace Prisma {
     userId: number
     itemId: number
     quantity: number
+    owned: number
     _all: number
   }
 
@@ -5828,6 +5857,7 @@ export namespace Prisma {
     userId?: true
     itemId?: true
     quantity?: true
+    owned?: true
   }
 
   export type UserItemMaxAggregateInputType = {
@@ -5835,6 +5865,7 @@ export namespace Prisma {
     userId?: true
     itemId?: true
     quantity?: true
+    owned?: true
   }
 
   export type UserItemCountAggregateInputType = {
@@ -5842,6 +5873,7 @@ export namespace Prisma {
     userId?: true
     itemId?: true
     quantity?: true
+    owned?: true
     _all?: true
   }
 
@@ -5936,6 +5968,7 @@ export namespace Prisma {
     userId: number
     itemId: number
     quantity: number
+    owned: boolean
     _count: UserItemCountAggregateOutputType | null
     _avg: UserItemAvgAggregateOutputType | null
     _sum: UserItemSumAggregateOutputType | null
@@ -5962,6 +5995,7 @@ export namespace Prisma {
     userId?: boolean
     itemId?: boolean
     quantity?: boolean
+    owned?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     item?: boolean | ItemDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userItem"]>
@@ -5971,6 +6005,7 @@ export namespace Prisma {
     userId?: boolean
     itemId?: boolean
     quantity?: boolean
+    owned?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     item?: boolean | ItemDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userItem"]>
@@ -5980,6 +6015,7 @@ export namespace Prisma {
     userId?: boolean
     itemId?: boolean
     quantity?: boolean
+    owned?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     item?: boolean | ItemDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userItem"]>
@@ -5989,9 +6025,10 @@ export namespace Prisma {
     userId?: boolean
     itemId?: boolean
     quantity?: boolean
+    owned?: boolean
   }
 
-  export type UserItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "itemId" | "quantity", ExtArgs["result"]["userItem"]>
+  export type UserItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "itemId" | "quantity" | "owned", ExtArgs["result"]["userItem"]>
   export type UserItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     item?: boolean | ItemDefaultArgs<ExtArgs>
@@ -6016,6 +6053,7 @@ export namespace Prisma {
       userId: number
       itemId: number
       quantity: number
+      owned: boolean
     }, ExtArgs["result"]["userItem"]>
     composites: {}
   }
@@ -6445,6 +6483,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"UserItem", 'Int'>
     readonly itemId: FieldRef<"UserItem", 'Int'>
     readonly quantity: FieldRef<"UserItem", 'Int'>
+    readonly owned: FieldRef<"UserItem", 'Boolean'>
   }
     
 
@@ -6904,7 +6943,9 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     keyId: 'keyId',
-    quantity: 'quantity'
+    quantity: 'quantity',
+    updatedAt: 'updatedAt',
+    lastClaimedAt: 'lastClaimedAt'
   };
 
   export type UserKeyScalarFieldEnum = (typeof UserKeyScalarFieldEnum)[keyof typeof UserKeyScalarFieldEnum]
@@ -6914,7 +6955,8 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     itemId: 'itemId',
-    quantity: 'quantity'
+    quantity: 'quantity',
+    owned: 'owned'
   };
 
   export type UserItemScalarFieldEnum = (typeof UserItemScalarFieldEnum)[keyof typeof UserItemScalarFieldEnum]
@@ -6952,6 +6994,20 @@ export namespace Prisma {
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -7142,6 +7198,8 @@ export namespace Prisma {
     userId?: IntFilter<"UserKey"> | number
     keyId?: IntFilter<"UserKey"> | number
     quantity?: IntFilter<"UserKey"> | number
+    updatedAt?: DateTimeFilter<"UserKey"> | Date | string
+    lastClaimedAt?: DateTimeNullableFilter<"UserKey"> | Date | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     key?: XOR<KeyScalarRelationFilter, KeyWhereInput>
   }
@@ -7151,6 +7209,8 @@ export namespace Prisma {
     userId?: SortOrder
     keyId?: SortOrder
     quantity?: SortOrder
+    updatedAt?: SortOrder
+    lastClaimedAt?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     key?: KeyOrderByWithRelationInput
   }
@@ -7164,6 +7224,8 @@ export namespace Prisma {
     userId?: IntFilter<"UserKey"> | number
     keyId?: IntFilter<"UserKey"> | number
     quantity?: IntFilter<"UserKey"> | number
+    updatedAt?: DateTimeFilter<"UserKey"> | Date | string
+    lastClaimedAt?: DateTimeNullableFilter<"UserKey"> | Date | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     key?: XOR<KeyScalarRelationFilter, KeyWhereInput>
   }, "id" | "userId_keyId">
@@ -7173,6 +7235,8 @@ export namespace Prisma {
     userId?: SortOrder
     keyId?: SortOrder
     quantity?: SortOrder
+    updatedAt?: SortOrder
+    lastClaimedAt?: SortOrderInput | SortOrder
     _count?: UserKeyCountOrderByAggregateInput
     _avg?: UserKeyAvgOrderByAggregateInput
     _max?: UserKeyMaxOrderByAggregateInput
@@ -7188,6 +7252,8 @@ export namespace Prisma {
     userId?: IntWithAggregatesFilter<"UserKey"> | number
     keyId?: IntWithAggregatesFilter<"UserKey"> | number
     quantity?: IntWithAggregatesFilter<"UserKey"> | number
+    updatedAt?: DateTimeWithAggregatesFilter<"UserKey"> | Date | string
+    lastClaimedAt?: DateTimeNullableWithAggregatesFilter<"UserKey"> | Date | string | null
   }
 
   export type UserItemWhereInput = {
@@ -7198,6 +7264,7 @@ export namespace Prisma {
     userId?: IntFilter<"UserItem"> | number
     itemId?: IntFilter<"UserItem"> | number
     quantity?: IntFilter<"UserItem"> | number
+    owned?: BoolFilter<"UserItem"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     item?: XOR<ItemScalarRelationFilter, ItemWhereInput>
   }
@@ -7207,6 +7274,7 @@ export namespace Prisma {
     userId?: SortOrder
     itemId?: SortOrder
     quantity?: SortOrder
+    owned?: SortOrder
     user?: UserOrderByWithRelationInput
     item?: ItemOrderByWithRelationInput
   }
@@ -7220,6 +7288,7 @@ export namespace Prisma {
     userId?: IntFilter<"UserItem"> | number
     itemId?: IntFilter<"UserItem"> | number
     quantity?: IntFilter<"UserItem"> | number
+    owned?: BoolFilter<"UserItem"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     item?: XOR<ItemScalarRelationFilter, ItemWhereInput>
   }, "id" | "userId_itemId">
@@ -7229,6 +7298,7 @@ export namespace Prisma {
     userId?: SortOrder
     itemId?: SortOrder
     quantity?: SortOrder
+    owned?: SortOrder
     _count?: UserItemCountOrderByAggregateInput
     _avg?: UserItemAvgOrderByAggregateInput
     _max?: UserItemMaxOrderByAggregateInput
@@ -7244,6 +7314,7 @@ export namespace Prisma {
     userId?: IntWithAggregatesFilter<"UserItem"> | number
     itemId?: IntWithAggregatesFilter<"UserItem"> | number
     quantity?: IntWithAggregatesFilter<"UserItem"> | number
+    owned?: BoolWithAggregatesFilter<"UserItem"> | boolean
   }
 
   export type UserCreateInput = {
@@ -7416,6 +7487,8 @@ export namespace Prisma {
 
   export type UserKeyCreateInput = {
     quantity?: number
+    updatedAt?: Date | string
+    lastClaimedAt?: Date | string | null
     user: UserCreateNestedOneWithoutKeysInput
     key: KeyCreateNestedOneWithoutUserKeysInput
   }
@@ -7425,10 +7498,14 @@ export namespace Prisma {
     userId: number
     keyId: number
     quantity?: number
+    updatedAt?: Date | string
+    lastClaimedAt?: Date | string | null
   }
 
   export type UserKeyUpdateInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutKeysNestedInput
     key?: KeyUpdateOneRequiredWithoutUserKeysNestedInput
   }
@@ -7438,6 +7515,8 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     keyId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserKeyCreateManyInput = {
@@ -7445,10 +7524,14 @@ export namespace Prisma {
     userId: number
     keyId: number
     quantity?: number
+    updatedAt?: Date | string
+    lastClaimedAt?: Date | string | null
   }
 
   export type UserKeyUpdateManyMutationInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserKeyUncheckedUpdateManyInput = {
@@ -7456,10 +7539,13 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     keyId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserItemCreateInput = {
     quantity?: number
+    owned?: boolean
     user: UserCreateNestedOneWithoutItemsInput
     item: ItemCreateNestedOneWithoutUserItemsInput
   }
@@ -7469,10 +7555,12 @@ export namespace Prisma {
     userId: number
     itemId: number
     quantity?: number
+    owned?: boolean
   }
 
   export type UserItemUpdateInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutItemsNestedInput
     item?: ItemUpdateOneRequiredWithoutUserItemsNestedInput
   }
@@ -7482,6 +7570,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserItemCreateManyInput = {
@@ -7489,10 +7578,12 @@ export namespace Prisma {
     userId: number
     itemId: number
     quantity?: number
+    owned?: boolean
   }
 
   export type UserItemUpdateManyMutationInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserItemUncheckedUpdateManyInput = {
@@ -7500,6 +7591,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -7713,6 +7805,28 @@ export namespace Prisma {
     sellPrice?: SortOrder
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -7733,6 +7847,8 @@ export namespace Prisma {
     userId?: SortOrder
     keyId?: SortOrder
     quantity?: SortOrder
+    updatedAt?: SortOrder
+    lastClaimedAt?: SortOrder
   }
 
   export type UserKeyAvgOrderByAggregateInput = {
@@ -7747,6 +7863,8 @@ export namespace Prisma {
     userId?: SortOrder
     keyId?: SortOrder
     quantity?: SortOrder
+    updatedAt?: SortOrder
+    lastClaimedAt?: SortOrder
   }
 
   export type UserKeyMinOrderByAggregateInput = {
@@ -7754,6 +7872,8 @@ export namespace Prisma {
     userId?: SortOrder
     keyId?: SortOrder
     quantity?: SortOrder
+    updatedAt?: SortOrder
+    lastClaimedAt?: SortOrder
   }
 
   export type UserKeySumOrderByAggregateInput = {
@@ -7761,6 +7881,39 @@ export namespace Prisma {
     userId?: SortOrder
     keyId?: SortOrder
     quantity?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type ItemScalarRelationFilter = {
@@ -7778,6 +7931,7 @@ export namespace Prisma {
     userId?: SortOrder
     itemId?: SortOrder
     quantity?: SortOrder
+    owned?: SortOrder
   }
 
   export type UserItemAvgOrderByAggregateInput = {
@@ -7792,6 +7946,7 @@ export namespace Prisma {
     userId?: SortOrder
     itemId?: SortOrder
     quantity?: SortOrder
+    owned?: SortOrder
   }
 
   export type UserItemMinOrderByAggregateInput = {
@@ -7799,6 +7954,7 @@ export namespace Prisma {
     userId?: SortOrder
     itemId?: SortOrder
     quantity?: SortOrder
+    owned?: SortOrder
   }
 
   export type UserItemSumOrderByAggregateInput = {
@@ -7806,6 +7962,14 @@ export namespace Prisma {
     userId?: SortOrder
     itemId?: SortOrder
     quantity?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserKeyCreateNestedManyWithoutUserInput = {
@@ -8004,6 +8168,14 @@ export namespace Prisma {
     connect?: KeyWhereUniqueInput
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type UserUpdateOneRequiredWithoutKeysNestedInput = {
     create?: XOR<UserCreateWithoutKeysInput, UserUncheckedCreateWithoutKeysInput>
     connectOrCreate?: UserCreateOrConnectWithoutKeysInput
@@ -8030,6 +8202,10 @@ export namespace Prisma {
     create?: XOR<ItemCreateWithoutUserItemsInput, ItemUncheckedCreateWithoutUserItemsInput>
     connectOrCreate?: ItemCreateOrConnectWithoutUserItemsInput
     connect?: ItemWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutItemsNestedInput = {
@@ -8159,8 +8335,73 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type UserKeyCreateWithoutUserInput = {
     quantity?: number
+    updatedAt?: Date | string
+    lastClaimedAt?: Date | string | null
     key: KeyCreateNestedOneWithoutUserKeysInput
   }
 
@@ -8168,6 +8409,8 @@ export namespace Prisma {
     id?: number
     keyId: number
     quantity?: number
+    updatedAt?: Date | string
+    lastClaimedAt?: Date | string | null
   }
 
   export type UserKeyCreateOrConnectWithoutUserInput = {
@@ -8181,6 +8424,7 @@ export namespace Prisma {
 
   export type UserItemCreateWithoutUserInput = {
     quantity?: number
+    owned?: boolean
     item: ItemCreateNestedOneWithoutUserItemsInput
   }
 
@@ -8188,6 +8432,7 @@ export namespace Prisma {
     id?: number
     itemId: number
     quantity?: number
+    owned?: boolean
   }
 
   export type UserItemCreateOrConnectWithoutUserInput = {
@@ -8223,6 +8468,8 @@ export namespace Prisma {
     userId?: IntFilter<"UserKey"> | number
     keyId?: IntFilter<"UserKey"> | number
     quantity?: IntFilter<"UserKey"> | number
+    updatedAt?: DateTimeFilter<"UserKey"> | Date | string
+    lastClaimedAt?: DateTimeNullableFilter<"UserKey"> | Date | string | null
   }
 
   export type UserItemUpsertWithWhereUniqueWithoutUserInput = {
@@ -8249,10 +8496,13 @@ export namespace Prisma {
     userId?: IntFilter<"UserItem"> | number
     itemId?: IntFilter<"UserItem"> | number
     quantity?: IntFilter<"UserItem"> | number
+    owned?: BoolFilter<"UserItem"> | boolean
   }
 
   export type UserKeyCreateWithoutKeyInput = {
     quantity?: number
+    updatedAt?: Date | string
+    lastClaimedAt?: Date | string | null
     user: UserCreateNestedOneWithoutKeysInput
   }
 
@@ -8260,6 +8510,8 @@ export namespace Prisma {
     id?: number
     userId: number
     quantity?: number
+    updatedAt?: Date | string
+    lastClaimedAt?: Date | string | null
   }
 
   export type UserKeyCreateOrConnectWithoutKeyInput = {
@@ -8289,6 +8541,7 @@ export namespace Prisma {
 
   export type UserItemCreateWithoutItemInput = {
     quantity?: number
+    owned?: boolean
     user: UserCreateNestedOneWithoutItemsInput
   }
 
@@ -8296,6 +8549,7 @@ export namespace Prisma {
     id?: number
     userId: number
     quantity?: number
+    owned?: boolean
   }
 
   export type UserItemCreateOrConnectWithoutItemInput = {
@@ -8519,16 +8773,21 @@ export namespace Prisma {
     id?: number
     keyId: number
     quantity?: number
+    updatedAt?: Date | string
+    lastClaimedAt?: Date | string | null
   }
 
   export type UserItemCreateManyUserInput = {
     id?: number
     itemId: number
     quantity?: number
+    owned?: boolean
   }
 
   export type UserKeyUpdateWithoutUserInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     key?: KeyUpdateOneRequiredWithoutUserKeysNestedInput
   }
 
@@ -8536,16 +8795,21 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     keyId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserKeyUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     keyId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserItemUpdateWithoutUserInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
     item?: ItemUpdateOneRequiredWithoutUserItemsNestedInput
   }
 
@@ -8553,22 +8817,28 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserItemUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserKeyCreateManyKeyInput = {
     id?: number
     userId: number
     quantity?: number
+    updatedAt?: Date | string
+    lastClaimedAt?: Date | string | null
   }
 
   export type UserKeyUpdateWithoutKeyInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutKeysNestedInput
   }
 
@@ -8576,22 +8846,28 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserKeyUncheckedUpdateManyWithoutKeyInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastClaimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserItemCreateManyItemInput = {
     id?: number
     userId: number
     quantity?: number
+    owned?: boolean
   }
 
   export type UserItemUpdateWithoutItemInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutItemsNestedInput
   }
 
@@ -8599,12 +8875,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserItemUncheckedUpdateManyWithoutItemInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    owned?: BoolFieldUpdateOperationsInput | boolean
   }
 
 

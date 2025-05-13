@@ -1,28 +1,61 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { getUserProfile } from '../api/user';
+import { sellItem } from '../api/shop';
 
 export default function Selling() {
-    const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  // Set individual prices for each item type
-  const pricePerItem = {
-    cryCat: 500,
-    boss: 1275
-  };
+  const BASE_URL = "http://localhost:3000";
 
   const [quantity, setQuantity] = useState({
     cryCat: 0,
     boss: 0
   });
 
-  // Add state for user's money and inventory
-  const [userMoney, setUserMoney] = useState(4999000);
+  const pricePerItem = {
+    cryCat: 500,
+    boss: 1275
+  };
+
+  const storedUsername = localStorage.getItem("username");
+
+  const [username, setUsername] = useState("");
+  const [userMoney, setUserMoney] = useState(0);
+  const [userBag, setUserBag] = useState(0);
+  const [profilePic, setProfilePic] = useState("/assets/profile/avatar.png");
   const [userInventory, setUserInventory] = useState({
-    cryCat: 12,
-    boss: 8
+    cryCat: 0,
+    boss: 0
   });
-  
-  // Add state for the animation overlay
+
+  const fetchData = async () => {
+        const res = await getUserProfile(storedUsername);
+        if (res.success && res.data) {
+          const { username, coin, inventory, profilePic } = res.data;
+          setUsername(username);
+          setUserMoney(coin);
+          setUserBag(inventory.filter(item => item.owned && item.quantity > 0).reduce((total, item) => total + item.quantity, 0));
+          setProfilePic(profilePic?.startsWith('/uploads') ? `${BASE_URL}${profilePic}` : profilePic || "/assets/profile/avatar.png");
+          console.log("User inventory:", inventory);
+          const cryCat = inventory.find(item => item.name === 'Cry Cat')?.quantity || 0;
+          const boss = inventory.find(item => item.name === 'Boss Suit')?.quantity || 0;
+          setUserInventory({ cryCat, boss });
+        } else {
+            alert("Session expired or invalid user. Please log in again.");
+            navigate("/login");
+        }
+        
+  };
+    
+    useEffect(() => {
+      if (!storedUsername) {
+      navigate("/login");
+        return;
+      }
+        fetchData();
+  }, []);
+
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationMessage, setAnimationMessage] = useState("");
 
@@ -44,11 +77,9 @@ export default function Selling() {
     }
   };
 
-  // Calculate total items and total price
   const totalItems = quantity.cryCat + quantity.boss;
   const totalPrice = (quantity.cryCat * pricePerItem.cryCat) + (quantity.boss * pricePerItem.boss);
   
-  // Effect to hide animation after delay
   useEffect(() => {
     let timer;
     if (showAnimation) {
@@ -59,35 +90,35 @@ export default function Selling() {
     return () => clearTimeout(timer);
   }, [showAnimation]);
   
-  // Function to close animation when clicked
   const handleCloseAnimation = () => {
     setShowAnimation(false);
   };
   
-  // Handle the sell button click
-  const handleSell = () => {
-    // Check if user has selected any items to sell
-    if (totalItems > 0) {
-      // Add money
-      setUserMoney(prevMoney => prevMoney + totalPrice);
-      // Remove items from inventory
-      setUserInventory(prev => ({
-        cryCat: prev.cryCat - quantity.cryCat,
-        boss: prev.boss - quantity.boss
-      }));
-      // Reset quantities
-      setQuantity({
-        cryCat: 0,
-        boss: 0
-      });
-      // Show success animation
-      setAnimationMessage("Sell successful!");
-      setShowAnimation(true);
-    } else {
-      setAnimationMessage("Please select at least one item to sell.");
-      setShowAnimation(true);
+  const handleSell = async () => {
+  if (totalItems > 0) {
+    let success = true;
+
+    if (quantity.cryCat > 0) {
+      const res = await sellItem(username, 1, quantity.cryCat);
+      if (!res.success) success = false;
     }
-  };
+
+    if (quantity.boss > 0) {
+      const res = await sellItem(username, 7, quantity.boss);
+      if (!res.success) success = false;
+    }
+
+    if (success) {
+      fetchData();
+      setAnimationMessage("Sell successful!");
+    } else {
+      setAnimationMessage("Some items could not be sold. Please try again.");
+    }
+  } else {
+    setAnimationMessage("Please select at least one item to sell.");
+  }
+  setShowAnimation(true);
+};
   
   const textStrokeStyle = {
     WebkitTextStroke: '0.5px black',
@@ -153,18 +184,18 @@ export default function Selling() {
           <div className="flex items-center bg-white px-6 py-1 rounded-full md:px-8 md:py-4">
             <div className="relative">
               <div className="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden md:w-20 md:h-20">
-                <img src="../public/assets/profile/avatar.png" onClick={() => navigate("/profile")} alt="Profile" className="w-full h-full object-cover" />
+                <img src={profilePic} onClick={() => navigate("/profile")} alt="Profile" className="w-full h-full object-cover" />
               </div>
             </div>
             <div className="ml-3 md:ml-5">
-              <div className="font-bold text-black font-pixelify text-lg md:text-2xl">Michael Kaiser</div>
+              <div className="font-bold text-black font-pixelify text-lg md:text-2xl">{username}</div>
               <div className="text-yellow-500 font-bold font-pixelify text-lg md:text-2xl flex items-center">
                 <img src="../public/assets/profile/coin.png" alt="Coin" className="w-5 h-5 mr-2 md:w-8 md:h-8" />
                 {formatNumber(userMoney)}
               </div>
               <div className="text-black font-pixelify text-lg md:text-2xl flex items-center">
                 <img src="../public/assets/profile/bag.png" alt="Bag" className="w-5 h-5 mr-2 md:w-8 md:h-8" />
-                {userInventory.cryCat + userInventory.boss}
+                {userBag}
               </div>
             </div>
           </div>

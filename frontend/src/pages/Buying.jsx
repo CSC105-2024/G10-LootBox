@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { getUserProfile } from '../api/user';
+import { buyKey } from '../api/shop';
 
 export default function Buying() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  
+  const BASE_URL = "http://localhost:3000";
 
-  // Set individual prices for each key type
   const pricePerKey = {
     memeBox: 250,
     superheroBox: 850
@@ -15,13 +18,46 @@ export default function Buying() {
     superheroBox: 0
   });
 
-  // Add state for user's money and bag
-  const [userMoney, setUserMoney] = useState(4999000);
-  const [userBag, setUserBag] = useState(20);
+  const [username, setUsername] = useState("");
+  const [userMoney, setUserMoney] = useState(0);
+  const [userBag, setUserBag] = useState(0);
+  const [profilePic, setProfilePic] = useState("/assets/profile/avatar.png");
   
-  // Add state for the animation overlay
+  
   const [showAnimation, setShowAnimation] = useState(false);
   const [animationMessage, setAnimationMessage] = useState("");
+
+  const storedUsername = localStorage.getItem("username");
+
+  const fetchData = async () => {
+      const res = await getUserProfile(storedUsername);
+      if (res.success && res.data) {
+        const { username, coin, inventory, profilePic } = res.data;
+        setUsername(username);
+        setUserMoney(coin);
+        setUserBag(inventory.filter(item => item.owned && item.quantity > 0).reduce((total, item) => total + item.quantity, 0));
+        setProfilePic(profilePic?.startsWith('/uploads') ? `${BASE_URL}${profilePic}` : profilePic || "../public/assets/profile/avatar.png");
+      } else {
+          alert("Session expired or invalid user. Please log in again.");
+          navigate("/login");
+      }
+  };
+
+  useEffect(() => {
+      if (!storedUsername) {
+      navigate("/login");
+        return;
+      }
+        fetchData();
+  },[]);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchData();
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
 
   const handleIncrement = (keyType) => {
     setQuantity(prev => ({
@@ -39,50 +75,58 @@ export default function Buying() {
     }
   };
 
-  // Calculate total keys and total price
   const totalKeys = quantity.memeBox + quantity.superheroBox;
   const totalPrice = (quantity.memeBox * pricePerKey.memeBox) + (quantity.superheroBox * pricePerKey.superheroBox);
   
-  // Effect to hide animation after delay
   useEffect(() => {
     let timer;
     if (showAnimation) {
       timer = setTimeout(() => {
         setShowAnimation(false);
-      }, 2000); // Animation will show for 2 seconds
+      }, 2000); 
     }
     return () => clearTimeout(timer);
   }, [showAnimation]);
+
+  const handleBuy = async () => {
+  if (totalKeys <= 0) {
+    setAnimationMessage("Please select at least one key to purchase.");
+    setShowAnimation(true);
+    return;
+  }
+
+  if (userMoney < totalPrice) {
+    setAnimationMessage("Not enough coins for this purchase!");
+    setShowAnimation(true);
+    return;
+  }
+
+  let success = true;
+
+  if (quantity.memeBox > 0) {
+    const res = await buyKey(username, 'Meme', quantity.memeBox);
+    if (!res.success) success = false;
+  }
+
+  if (quantity.superheroBox > 0) {
+    const res = await buyKey(username, 'Superhero', quantity.superheroBox);
+    if (!res.success) success = false;
+  }
+
+  if (success) {
+    fetchData();
+    setQuantity({ memeBox: 0, superheroBox: 0 });
+    setAnimationMessage("Purchase successful!");
+  } else {
+    setAnimationMessage("Purchase failed. Please try again.");
+  }
+  setShowAnimation(true);
+};
+
+const handleCloseAnimation = () => {
+  setShowAnimation(false);
+};
   
-  // Handle the buy button click
-  const handleBuy = () => {
-    // Check if user has enough money
-    if (userMoney >= totalPrice && totalKeys > 0) {
-      // Deduct money
-      setUserMoney(prevMoney => prevMoney - totalPrice);
-      // Add keys to bag
-     
-      // Reset quantities
-      setQuantity({
-        memeBox: 0,
-        superheroBox: 0
-      });
-      // Show success animation
-      setAnimationMessage("Purchase successful!");
-      setShowAnimation(true);
-    } else if (totalKeys <= 0) {
-      setAnimationMessage("Please select at least one key to purchase.");
-      setShowAnimation(true);
-    } else {
-      setAnimationMessage("Not enough coins for this purchase!");
-      setShowAnimation(true);
-    }
-  };
-  
-  // Function to close animation when clicked
-  const handleCloseAnimation = () => {
-    setShowAnimation(false);
-  };
   
   const textStrokeStyle = {
     WebkitTextStroke: '0.5px black',
@@ -109,7 +153,6 @@ export default function Buying() {
     textShadow: '3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000'
   };
   
-  // Updated animation message style to match Prize and Total text sizes
   const mobileMessageStrokeStyle = {
     WebkitTextStroke: '0.5px black',
     textShadow: '1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000'
@@ -128,7 +171,6 @@ export default function Buying() {
     <div className="min-h-screen flex justify-center items-center p-0 bg-cover bg-center bg-no-repeat" 
          style={{ backgroundImage: "url('../public/assets/background/shopbg.png')" }}>
       <div className="relative w-full h-screen">
-        {/* Animation Overlay - With click to close functionality */}
         {showAnimation && (
           <div 
             className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-md cursor-pointer"
@@ -157,11 +199,11 @@ export default function Buying() {
           <div className="flex items-center bg-white px-6 py-1 rounded-full md:px-8 md:py-4">
             <div className="relative">
               <div className="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden md:w-20 md:h-20">
-                <img src="../public/assets/profile/avatar.png" alt="Profile" onClick={() => navigate("/profile")} className="w-full h-full object-cover" />
+                <img src={profilePic} alt="Profile" onClick={() => navigate("/profile")} className="w-full h-full object-cover" />
               </div>
             </div>
             <div className="ml-3 md:ml-5">
-              <div className="font-bold text-black font-pixelify text-lg md:text-2xl">Michael Kaiser</div>
+              <div className="font-bold text-black font-pixelify text-lg md:text-2xl">{username}</div>
               <div className="text-yellow-500 font-bold font-pixelify text-lg md:text-2xl flex items-center">
                 <img src="../public/assets/profile/coin.png" alt="Coin" className="w-5 h-5 mr-2 md:w-8 md:h-8" />
                 {formatNumber(userMoney)}

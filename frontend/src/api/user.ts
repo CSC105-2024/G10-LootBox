@@ -95,3 +95,4 @@ export const getUserProfile = async (username: string) => {
     };
   }
 };
+

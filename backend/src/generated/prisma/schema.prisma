@@ -36,23 +36,26 @@ model Item {
 }
 
 model UserKey {
-  id       Int  @id @default(autoincrement())
-  userId   Int
-  keyId    Int
-  quantity Int  @default(0)
-  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  key      Key  @relation(fields: [keyId], references: [id], onDelete: Cascade)
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  keyId         Int
+  quantity      Int       @default(0)
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key           Key       @relation(fields: [keyId], references: [id], onDelete: Cascade)
+  updatedAt     DateTime  @default(now()) @updatedAt
+  lastClaimedAt DateTime?
 
   @@unique([userId, keyId])
 }
 
 model UserItem {
-  id       Int  @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   userId   Int
   itemId   Int
-  quantity Int  @default(0)
-  user     User @relation(fields: [userId], references: [id])
-  item     Item @relation(fields: [itemId], references: [id])
+  quantity Int     @default(0)
+  owned    Boolean @default(false)
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item     Item    @relation(fields: [itemId], references: [id])
 
   @@unique([userId, itemId])
 }

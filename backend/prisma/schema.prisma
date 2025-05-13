@@ -44,6 +44,8 @@ model UserKey {
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   key    Key  @relation(fields: [keyId], references: [id], onDelete: Cascade)
   @@unique([userId, keyId])
+  updatedAt DateTime @updatedAt @default(now()) 
+  lastClaimedAt DateTime?
 }
 
 model UserItem {
@@ -51,6 +53,7 @@ model UserItem {
   userId   Int
   itemId   Int
   quantity Int @default(0)
+  owned    Boolean @default(false)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   item Item @relation(fields: [itemId], references: [id])
   @@unique([userId, itemId])

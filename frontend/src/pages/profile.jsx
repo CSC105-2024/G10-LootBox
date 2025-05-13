@@ -33,13 +33,12 @@ export default function Profile() {
         setUsername(username);
         setCoin(coin);
         setInventory(inventory);
-        setInventoryCount(inventory.filter(item => item.owned && item.count > 0).length);
-
-        // ✅ ปรับให้รองรับ URL รูปจาก backend
+        setInventoryCount(inventory.filter(item => item.owned && item.quantity > 0).reduce((total, item) => total + item.quantity, 0));
         setProfilePic(profilePic?.startsWith('/uploads') ? `${BASE_URL}${profilePic}` : profilePic || "/assets/profile/avatar.png");
         setBackgroundImage(backgroundImage?.startsWith('/uploads') ? `${BASE_URL}${backgroundImage}` : backgroundImage || "/assets/background/profilebg.png");
       } else {
-        console.error("Failed to load profile:", res.msg);
+        alert("Session expired or invalid user. Please log in again.");
+        navigate("/login");
       }
     };
 
@@ -119,7 +118,6 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-pink-100 font-pixelify pb-6 relative">
-      {/* Top Bar */}
       <div className="flex items-center justify-between p-4 bg-white shadow-md">
         <button onClick={() => navigate('/main')} className="flex items-center text-gray-700">
           <span className="text-2xl mr-2">←</span>
@@ -153,7 +151,6 @@ export default function Profile() {
         </div>
       )}
 
-      {/* Profile Header */}
       <div className="relative">
         <div className="w-full h-32 sm:h-48 bg-cover bg-center relative overflow-hidden" style={{ backgroundImage: `url(${backgroundImage})` }}>
           {showEditMode && (
@@ -198,7 +195,6 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Inventory Section */}
       <div className="px-4 pt-3 pb-6">
         <div className="flex items-center mb-3">
           <h3 className="text-xl font-bold">Inventory 📦</h3>
@@ -208,9 +204,9 @@ export default function Profile() {
             {inventory.map((item) => (
               <div key={item.id} className={`bg-gray-200 rounded-lg p-2 relative ${item.owned ? 'opacity-100' : 'opacity-60'}`}>
                 <img src={item.img} alt={item.name} className={`w-full h-16 sm:h-20 object-contain ${!item.owned ? 'grayscale' : ''}`} />
-                {item.owned && item.count > 0 && (
+                {item.owned && item.quantity > 0 && (
                   <div className="absolute top-1 right-1 bg-indigo-600 text-white text-xs px-1 rounded-md">
-                    x{item.count}
+                    x{item.quantity}
                   </div>
                 )}
               </div>

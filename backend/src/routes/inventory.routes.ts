@@ -6,8 +6,5 @@ const inventory = new Hono();
 
 inventory.get('/items', itemController.getAllBaseItems);
 inventory.get('/:username/keys', userController.getUserKeys);
-inventory.get('/:username', userController.getUserInventory);
-inventory.get('/items/rarity/:rarity', itemController.getItemsByRarity);
-
 
 export default inventory;

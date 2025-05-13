@@ -9,5 +9,4 @@ userRoutes.delete('/delete/:username', userController.handleDeleteAccount);
 userRoutes.post('/upload-images', userController.uploadUserImages);
 userRoutes.get('/profile/:username', userController.getUserProfile);
 
-
 export default userRoutes ;

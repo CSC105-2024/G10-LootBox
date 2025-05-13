@@ -19,14 +19,18 @@ export const addItemToUser = async (userId: number, itemId: number, quantity: nu
   if (existingUserItem) {
     return db.userItem.update({
       where: { id: existingUserItem.id },
-      data: { quantity: existingUserItem.quantity + quantity },
+      data: { 
+        quantity: existingUserItem.quantity + quantity,
+        owned: true,
+      },
     });
   } else {
     return db.userItem.create({
-      data: { userId, itemId, quantity },
+      data: { userId, itemId, quantity, owned: true },
     });
   }
 };
+
 
 export const sellItem = async (userId: number, itemId: number, quantity: number) => {
   const userItem = await db.userItem.findFirst({
@@ -69,9 +73,8 @@ export const getAllBaseItems = async () => {
   });
 };
 
-export const getItemsByRarity = async (rarity: string) => {
+export const getItemsByTypeAndRarity = async (type: string, rarity: string) => {
   return db.item.findMany({
-    where: { rarity },
+    where: { type, rarity },
   });
 };
-
