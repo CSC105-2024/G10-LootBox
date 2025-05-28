@@ -53,10 +53,22 @@ _Provide a brief description of your project here. Include what problem it solve
 
 ### :hammer_and_wrench: Tech Stack
 
-- Node.js
-- Express.js
-- MySQL
-- Other dependencies...
+| Technology                 | Purpose                                               | Version           |
+| -------------------------- | ----------------------------------------------------- | ----------------- |
+| **React**                  | UI library for building component-based interfaces    | ^19.0.0           |
+| **React DOM**              | DOM-specific methods for React rendering              | ^19.0.0           |
+| **React Router DOM**       | Routing library for SPA navigation                    | ^7.4.0            |
+| **Axios**                  | Promise-based HTTP client for API requests            | ^1.9.0            |
+| **React Hook Form**        | Performant form management and validation             | ^7.54.2           |
+| **Zod**                    | Type-safe schema validation and parsing               | ^3.24.2           |
+| **Tailwind CSS**           | Utility-first CSS framework for custom UI design      | ^4.1.3            |
+| **@tailwindcss/vite**      | Tailwind integration plugin for Vite                  | ^4.0.15           |
+| **Vite**                   | Fast development server and build tool                | ^6.2.0            |
+| **ESLint**                 | Linting tool for code quality and consistency         | ^9.21.0           |
+| **React Icons**            | Icon library for React apps                           | ^5.5.0            |
+| **TypeScript Support**     | React types via `@types/react` and `@types/react-dom` | ^19.0.x           |
+| **PostCSS & Autoprefixer** | CSS processing and vendor prefixing for Tailwind      | ^8.5.3 / ^10.4.21 |
+
 
 ### :electric_plug: API Endpoints
 
