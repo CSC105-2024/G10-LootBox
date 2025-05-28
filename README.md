@@ -1,6 +1,6 @@
 ## :pushpin: Project Title
 
-_Provide a brief description of your project here. Include what problem it solves or what it does._
+Our project is free loot-box project that want to help the people who is gambling addict that lost his money and many things in life,so play a free gambling in this website can make them fun and also save their money.
 
 ---
 
