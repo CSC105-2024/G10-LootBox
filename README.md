@@ -18,10 +18,15 @@ _Provide a brief description of your project here. Include what problem it solve
 
 ### :wrench: Tech Stack
 
-- React
-- Axios
-- React Router DOM
-- Tailwind CSS
+| Technology                | Description                                                             | Version        |
+| ------------------------- | ----------------------------------------------------------------------- | -------------- |
+| **React**                 | JavaScript library for building user interfaces using components        | ^19.0.0        |
+| **React Router DOM**      | Client-side routing for seamless navigation in single-page applications | ^7.4.0         |
+| **Axios**                 | Promise-based HTTP client for API communication                         | ^1.9.0         |
+| **Tailwind CSS**          | Utility-first CSS framework for custom UI development                   | ^4.1.3         |
+| **Vite**                  | Fast build tool and development server for modern web projects          | ^6.2.0         |
+| **TypeScript (optional)** | Type-safe support using React and Vite typings                          | via `@types/*` |
+
 
 ### :rocket: Getting Started - React Client
 
