@@ -5,21 +5,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { loginUser } from "../api/user";
 
+
 export default function LogIn() {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
 
-  const schema = z.object({
-    username: z.string().min(1, "Username is required"),
-    password: z.string().min(1, "Password is required"),
-  });
-
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    // resolver: zodResolver(schema),
     defaultValues: {
       username: "",
       password: "",

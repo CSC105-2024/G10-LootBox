@@ -13,7 +13,7 @@
       data: {
         username,
         password,
-        coin: 0,
+        coin: 20000,
       },
     });
   };

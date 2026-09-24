@@ -460,8 +460,8 @@ const Main = () => {
           
           <div className="flex justify-center mb-3">
             <button 
-              onClick={() => { 
-                if (keys > 0) {
+              onClick={() => {
+                if (memeKeys > 0) {
                   navigate("/memeRandom");
                   const openSound = new Audio('../public/assets/music/click.mp3');
                   openSound.volume = volume / 100;

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp.jsx";
-import LogIn from "./pages/Login.jsx";
+import LogIn from "./pages/LogIn.jsx";
 import Main from "./pages/Main.jsx";
 import SuperHeroBox from "./pages/SuperHeroBox.jsx";
 import Buying from "./pages/Buying.jsx";

@@ -160,7 +160,7 @@ const Main = () => {
   
   const handlePlayButtonClick = () => {
     if (heroKeys > 0) {
-      navigate("/HeroRandom");
+      navigate("/heroRandom");
       const openSound = new Audio('../public/assets/music/click.mp3');
       openSound.volume = volume / 100;
       openSound.play();

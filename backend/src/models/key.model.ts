@@ -8,8 +8,8 @@ export const KEY_TYPES = {
 export type KeyType = typeof KEY_TYPES[keyof typeof KEY_TYPES];
 
 export const KEY_REGEN_INTERVALS: Record<KeyType, number> = {
-  Meme: 1000 * 60 * 60 * 1,    
-  Superhero: 1000 * 60 * 60 * 2 
+  Meme: 1000 * 60 * 1,
+  Superhero: 1000 * 60 * 1
 };
 
 const isValidKeyType = (type: string): type is KeyType => {
@@ -132,11 +132,9 @@ export const giveFreeKey = async (userId: number, type: string, quantity: number
   });
 
   const now = new Date();
-  const cooldown = type === KEY_TYPES.MEME ? 1 : 2;
   const nextAllowedTime = new Date(
-    userKey?.lastClaimedAt?.getTime() || 0
+    (userKey?.lastClaimedAt?.getTime() || 0) + KEY_REGEN_INTERVALS[type]
   );
-  nextAllowedTime.setHours(nextAllowedTime.getHours() + cooldown);
 
   if (userKey && now < nextAllowedTime) {
     throw new Error(`Cooldown not finished. Try again later.`);
